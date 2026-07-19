@@ -18,7 +18,7 @@ export default function Emblem({ size = 32, className = '' }) {
       />
       <text
         x="100"
-        y="134"
+        y="144"
         textAnchor="middle"
         style={{ font: '700 130px Fraunces, Georgia, serif', fill: '#f4c430' }}
       >
