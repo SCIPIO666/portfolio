@@ -234,11 +234,11 @@ export default function DevScipioAnimation() {
         style={{
           margin: 0,
           fontFamily: "'JetBrains Mono', ui-monospace, monospace",
-          fontSize: '20px',
+          fontSize: '10px',
           lineHeight: '15px',
           letterSpacing: '0.05em',
           color: '#f4c430',
-          opacity: 0.05,
+          opacity: 0.03,
           whiteSpace: 'pre',
         }}
       >
