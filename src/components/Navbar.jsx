@@ -6,7 +6,7 @@ import Label from './Label'
 const NAV_LINKS = [
   { to: '/about', label: <Label number="01." text="About"/>},
   { to: '/experience', label: <Label number="02." text="Experience"/> },
-  { to: '/work', label: <Label number="03." text="Work"/> },
+//   { to: '/work', label: <Label number="03." text="Work"/> },
   { to: '/contact', label: <Label number="04." text="Contact"/> },
   { to: '/resume', label: <Label number="" text="Resume" hasNumber={false} /> },
 ]
