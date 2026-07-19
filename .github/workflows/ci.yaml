@@ -1,0 +1,17 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+
+jobs:
+  check-project:
+    runs-on: ubuntu-latest
+
+    steps:
+      - Download code
+      - Install Node
+      - Install dependencies
+      - Run linter
+      - Run tests
+      - Build project
