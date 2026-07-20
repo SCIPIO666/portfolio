@@ -22,7 +22,7 @@ export default function CallToActionButton({text,callback}) {
       rounded-xl
       border border-primary
       bg-surface
-      px-6 py-3
+      px-4 py-2
       text-primary-50
       transition-all duration-300
       group-hover:-translate-x-1

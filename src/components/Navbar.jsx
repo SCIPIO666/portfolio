@@ -31,13 +31,13 @@ export default function Navbar() {
         </NavLink>
 
         {/* desktop*/}
-        <div className="hidden md:flex gap-6">
+        <div className="hidden md:flex gap-6 items-center">
           {NAV_LINKS.map(({ to, label }) => (
             <NavLink
               key={to}
               to={to}
               className={({ isActive }) =>
-                `text-l font-medium transition ${
+                `text-l font-medium transition flex items-center ${
                   isActive ? 'text-primary' : 'text-muted hover:text-ink'
                 }`
               }
