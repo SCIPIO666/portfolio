@@ -6,7 +6,7 @@ export default function HomePage() {
     <div className="min-h-screen flex items-center px-6 md:px-12 lg:px-24 pt-20 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none bg-gradient-hero" />
       <div className="absolute -top-10 -right-10 lg:right-20 lg:top-10 text-[12rem] lg:text-[20rem] font-display font-bold text-surface-raised/30 select-none pointer-events-none leading-none">
-        E
+        S
       </div>
       
       <div className="max-w-4xl w-full mx-auto relative z-10">
@@ -22,7 +22,7 @@ export default function HomePage() {
         
 
         <h2 className="text-h2 font-sans font-medium text-muted leading-[1.2] mb-6">
-          I build software for the web.
+          I engineer digital solutions for the web.
         </h2>
         
 
