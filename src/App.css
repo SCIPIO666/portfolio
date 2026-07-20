@@ -1,14 +1,13 @@
 /**
  * -----------------------------------------------------------------------
- * Sidoarjo Bold — design tokens for the Zama Systems portfolio.
- * No prefixing, no plugin config — @theme is the whole setup.
+ * Sidoarjo Bold — design tokens >>> Zama Systems portfolio.
  * -----------------------------------------------------------------------
  */
 
 @import "tailwindcss";
 
 @theme {
-  /*  COLOR — base palette  */
+  /*  COLORS  */
   --color-bg:              #120f2e;   /* page background, deep indigo   */
   --color-bg-soft:         #17123c;   /* hero gradient floor            */
   --color-surface:         #1c1747;   /* cards, panels                  */
@@ -173,5 +172,12 @@
     letter-spacing: var(--tracking-kicker);
     color: var(--color-accent);
     margin-bottom: 14px;
+  }
+  .hovered{
+    transition: all .3s ease-out;
+  }
+  .hoverd:hover{
+    background-color: var(--color-primary);
+    transform: translateX('10px');
   }
 }
