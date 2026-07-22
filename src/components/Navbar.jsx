@@ -14,7 +14,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
 
-  // Close menu when clicking outside or on a link
+  // Close menu 
   useEffect(() => {
     const handleClickOutside = (e) => {
       const nav = document.getElementById('mobile-nav')
@@ -27,7 +27,6 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [open])
 
-  // Prevent body scroll when menu is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden'
