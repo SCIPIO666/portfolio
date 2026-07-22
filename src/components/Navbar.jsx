@@ -7,7 +7,7 @@ const NAV_LINKS = [
   {location: '#experience', label: <Label number="02." text="Experience"/> },
   {location: '#work', label: <Label number="03." text="Work"/> },
   {location: '#contact', label: <Label number="04." text="Contact"/> },
-  {location: '#resume', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
+  {location: '/resume.pdf', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
 ]
 
 export default function Navbar() {
