@@ -1,6 +1,5 @@
 import React from 'react'
 import CallToActionButton from '../components/CallToActionButton'
-
 export default function HomePage() {
   return (
     <div className="min-h-screen flex items-center px-6 md:px-12 lg:px-24 pt-20 pb-12 relative overflow-hidden">

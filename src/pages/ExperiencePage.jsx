@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function ExperiencePage() {
   return (
-    <div>ExperiencePage</div>
+
+    <section id='experience'>
+      <div>ExperiencePage</div>
+    </section>
   )
 }

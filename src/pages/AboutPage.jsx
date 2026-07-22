@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function AboutPage() {
   return (
-    <div>AboutPage</div>
+    <section id='about'>
+        <div>AboutPage</div>
+    </section>
+
   )
 }
