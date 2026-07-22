@@ -1,5 +1,9 @@
-import { useRef, useLayoutEffect } from "react";
+import { useRef } from "react";
 import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(useGSAP, ScrollTrigger);
 
 function PageHeader({ number, text }) {
   const headerRef = useRef(null);
@@ -7,20 +11,20 @@ function PageHeader({ number, text }) {
   const titleRef = useRef(null);
   const lineRef = useRef(null);
 
-  useLayoutEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline();
+  useGSAP(
+    () => {
+      const tl = gsap.timeline({ paused: true });
 
       tl.from(numberRef.current, {
-        y: 25,
+        y: 30,
         opacity: 0,
-        duration: 0.45,
+        duration: 0.5,
         ease: "power3.out",
       })
         .from(
           titleRef.current,
           {
-            y: 25,
+            y: 30,
             opacity: 0,
             duration: 0.6,
             ease: "power3.out",
@@ -35,12 +39,19 @@ function PageHeader({ number, text }) {
             duration: 0.7,
             ease: "power3.out",
           },
-          "-=0.3"
+          "-=0.35"
         );
-    }, headerRef);
 
-    return () => ctx.revert();
-  }, []);
+      ScrollTrigger.create({
+        trigger: headerRef.current,
+        start: "top 80%",
+        once: true,      // animate only once
+        animation: tl,   // connect timeline
+        toggleActions: "play none none none",
+      });
+    },
+    { scope: headerRef }
+  );
 
   return (
     <header ref={headerRef} className="custom-header-ctn">
