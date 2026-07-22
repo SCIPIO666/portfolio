@@ -180,4 +180,36 @@
     background-color: var(--color-primary);
     transform: translateX('10px');
   }
+.custom-header-ctn{
+  padding-left: .5rem;
+    display:flex;
+    align-items:center;
+    gap:1rem;
+
+    margin-bottom:4rem;
+}
+
+.custom-header-number{
+    color:var(--color-primary);
+    font-family:var(--font-mono);
+    font-size:1.5rem;
+    font-weight:700;
+}
+
+.custom-header-title{
+    color:var(--color-ink);
+    font-family:var(--font-sans);
+    font-size:clamp(2rem,4vw,3rem);
+    font-weight:700;
+    line-height:1.1;
+    margin:0;
+}
+
+.custom-header-line{
+    flex:1;
+    height:1px;
+    background:var(--color-border);
+    margin-left:1rem;
+    margin-right: 1rem;
+}
 }

@@ -1,9 +1,9 @@
 import React from 'react'
-
+import PageHeader from '../components/PageHeader'
 export default function AboutPage() {
   return (
     <section id='about' className='min-h-screen pt-24 md:mt-32 lg:mt-32'>
-        <div className='top-40'>AboutPage</div>
+        <PageHeader text='About Me' number='01.'/>
     </section>
 
   )
