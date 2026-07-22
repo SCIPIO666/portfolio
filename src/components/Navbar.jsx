@@ -1,60 +1,71 @@
 import { useState, useEffect } from 'react'
-import { NavLink, useLocation } from 'react-router-dom'
 import Emblem from './Emblem'
 import Label from './Label'
 import CallToActionButton from './CallToActionButton'
+
 const NAV_LINKS = [
-  { to: '/about', label: <Label number="01." text="About"/>},
-  { to: '/experience', label: <Label number="02." text="Experience"/> },
-  { to: '/work', label: <Label number="03." text="Work"/> },
-  { to: '/contact', label: <Label number="04." text="Contact"/> },
-  { to: '/resume', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
+  { location: '#about', label: <Label number="01." text="About"/>},
+  { location: '#experience', label: <Label number="02." text="Experience"/> },
+  { location: '#work', label: <Label number="03." text="Work"/> },
+  { location: '#contact', label: <Label number="04." text="Contact"/> },
+  { location: '/resume.pdf', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
-  const location = useLocation()
+
+  // Close menu 
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      const nav = document.getElementById('mobile-nav')
+      const button = document.querySelector('button[aria-label]')
+      if (open && nav && !nav.contains(e.target) && !button?.contains(e.target)) {
+        setOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [open])
 
   useEffect(() => {
-    setOpen(false)
-  }, [location.pathname])
+    if (open) {
+      document.body.style.overflow = 'hidden'
+    } else {
+      document.body.style.overflow = 'unset'
+    }
+    return () => {
+      document.body.style.overflow = 'unset'
+    }
+  }, [open])
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
       <nav className="w-full flex items-center justify-between px-6 py-4">
-        <NavLink to="/" className="group flex items-center gap-2" aria-label="Home">
+        <a href="#hero" className="group flex items-center gap-2" aria-label="Home">
           <Emblem
             size={45}
             className="transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110"
           />
           <span className="font-mono text-sm tracking-widest text-primary">Scipio</span>
-        </NavLink>
+        </a>
 
-        {/* desktop*/}
+        {/* desktop */}
         <div className="hidden md:flex gap-6 items-center">
-          {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                `text-l font-medium transition flex items-center ${
-                  isActive ? 'text-primary' : 'text-muted hover:text-ink'
-                }`
-              }
-            >
+          {NAV_LINKS.map(({ location, label }) => (
+            <a href={location} key={location} className="">
               {label}
-            </NavLink>
+            </a>
           ))}
         </div>
 
-        {/* mobile*/}
+        {/* mobile hamburger */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
           aria-controls="mobile-nav"
-          className="md:hidden relative w-8 h-8 shrink-0 text-ink"
+          className="md:hidden relative w-8 h-8 shrink-0 text-ink z-30"
         >
           <span
             className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
@@ -74,26 +85,31 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* mobile menu */}
+      {/* Mobile overlay */}
+      <div
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+          open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
+        }`}
+        onClick={() => setOpen(false)}
+      />
+
+      {/* Mobile drawer - slides from right */}
       <div
         id="mobile-nav"
-        className={`md:hidden overflow-hidden border-t border-border transition-[max-height] duration-300 ease-in-out ${
-          open ? 'max-h-100vh' : 'max-h-0 border-t-0'
+        className={`fixed top-0 right-0 h-screen w-4/5 pt-0 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden ${
+          open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="flex flex-col px-6 py-2 w-3/5">
-          {NAV_LINKS.map(({ to, label }) => (
-            <NavLink
-              key={to}
-              to={to}
-              className={({ isActive }) =>
-                `py-3 text-sm font-medium border-b border-border/50 last:border-0 ${
-                  isActive ? 'text-primary' : 'text-muted'
-                }`
-              }
+        <div className="flex flex-col items-center justify-center h-full gap-8 px-6">
+          {NAV_LINKS.map(({ location, label }) => (
+            <a
+              href={location}
+              key={location}
+              className="text-lg hover:text-primary transition-colors"
+              onClick={() => setOpen(false)} 
             >
               {label}
-            </NavLink>
+            </a>
           ))}
         </div>
       </div>

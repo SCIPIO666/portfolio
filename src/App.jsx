@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { RouterProvider } from 'react-router-dom';
 import './App.css';
 import DevScipioAnimation from './components/DevScipioAnimation';
-import { router } from './router';
-
+import SinglePage from './pages/SinglePage';
+import Navbar from './components/Navbar';
 function App() {
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +15,13 @@ function App() {
     return <DevScipioAnimation />;
   }
 
-  return <RouterProvider router={router} />;
+  return (
+    <>
+    <Navbar/>
+      <SinglePage/>
+    </>
+  )
+
 }
 
 export default App;
