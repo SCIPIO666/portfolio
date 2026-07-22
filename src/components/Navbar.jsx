@@ -7,7 +7,7 @@ const NAV_LINKS = [
   {location: '#experience', label: <Label number="02." text="Experience"/> },
   {location: '#work', label: <Label number="03." text="Work"/> },
   {location: '#contact', label: <Label number="04." text="Contact"/> },
-  {location: '', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
+  {location: '#resume', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
 ]
 
 export default function Navbar() {
@@ -21,7 +21,7 @@ export default function Navbar() {
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
       <nav className="w-full flex items-center justify-between px-6 py-4">
-        <a href="" to="/" className="group flex items-center gap-2" aria-label="Home">
+        <a href="" to="#hero" className="group flex items-center gap-2" aria-label="Home">
           <Emblem
             size={45}
             className="transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110"
@@ -34,11 +34,7 @@ export default function Navbar() {
           {NAV_LINKS.map(({ location, label }) => (
             <a href={location}
               key={location}
-              className={({ isActive }) =>
-                `text-l font-medium transition flex items-center ${
-                  isActive ? 'text-primary' : 'text-muted hover:text-ink'
-                }`
-              }
+              className=''
             >
               {label}
             </a>
@@ -81,13 +77,12 @@ export default function Navbar() {
       >
         <div className="flex flex-col px-6 py-2 w-3/5">
           {NAV_LINKS.map(({ location, label }) => (
-            <a>
+            <a
               href={location}
-              className={({ isActive }) =>
-                `py-3 text-sm font-medium border-b border-border/50 last:border-0 ${
-                  isActive ? 'text-primary' : 'text-muted'
-                }`
-              }
+              key={location}
+              className=''
+              
+              >
             
               {label}
             </a>

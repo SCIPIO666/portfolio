@@ -1,8 +1,8 @@
 import React from 'react'
 import CallToActionButton from '../components/CallToActionButton'
-export default function HomePage() {
+export default function Hero() {
   return (
-    <div className="min-h-screen flex items-center px-6 md:px-12 lg:px-24 pt-20 pb-12 relative overflow-hidden">
+    <section id='hero' className="min-h-screen flex items-center px-6 md:px-12 lg:px-24 pt-20 pb-12 relative overflow-hidden">
       <div className="absolute inset-0 pointer-events-none bg-gradient-hero" />
       <div className="absolute -top-10 -right-10 lg:right-20 lg:top-10 text-[12rem] lg:text-[20rem] font-display font-bold text-surface-raised/30 select-none pointer-events-none leading-none">
         S
@@ -54,6 +54,6 @@ export default function HomePage() {
           <span>Available for freelance work</span>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

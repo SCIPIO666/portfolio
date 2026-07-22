@@ -2,6 +2,9 @@ import React from 'react'
 
 export default function ResumePage() {
   return (
-    <div>ResumePage</div>
+    <section id='resume'>
+      <div>ResumePage</div>
+    </section>
+
   )
 }
