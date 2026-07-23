@@ -9,7 +9,7 @@ import Footer from '../components/Footer'
 export default function SinglePage() {
   return (
     <div className='pt-0 mt-0'>
-      {/* SocialLinks + EmailLink lg+ only */}
+      {/* socialLinks & emailLink in big screens only */}
       <Sidebar />
 
       <main className="lg:ml-[10%] min-h-screen pt-0">  

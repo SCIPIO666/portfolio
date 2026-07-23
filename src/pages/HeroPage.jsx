@@ -18,6 +18,20 @@ export default function Hero({ compact = false }) {
 
   useGSAP(
     () => {
+
+      gsap.to(hero.current, {
+      scale: 0.85,
+      opacity: 0,
+      ease: 'none',
+      scrollTrigger: {
+        trigger: hero.current,
+        start: 'top top',
+        end: '+=100%',
+        pin: true,
+        scrub: true,
+      },
+    });
+
       const tl = gsap.timeline({
         defaults: {
           ease: "power3.out",
@@ -111,6 +125,7 @@ export default function Hero({ compact = false }) {
       });
 
     },
+    
     { scope: hero }
   );
 
