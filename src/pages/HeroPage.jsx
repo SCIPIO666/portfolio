@@ -9,7 +9,6 @@ gsap.registerPlugin(useGSAP);
 
 export default function Hero({ compact = false }) {
   const hero = useRef();
-  const watermark = useRef();
   const intro = useRef();
   const nameRef = useRef();
   const title = useRef();
@@ -23,15 +22,6 @@ export default function Hero({ compact = false }) {
         defaults: {
           ease: "power3.out",
         },
-      });
-
-      // Watermark 
-      tl.from(watermark.current, {
-        opacity: 0,
-        scale: 1.4,
-        rotate: -15,
-        duration: 1.6,
-        ease: "power2.out",
       });
 
       // Intro
@@ -107,16 +97,8 @@ export default function Hero({ compact = false }) {
         "-=0.2"
       );
 
-      // Persistent floating animation for watermark
-      gsap.to(watermark.current, {
-        y: -20,
-        duration: 5,
-        repeat: -1,
-        yoyo: true,
-        ease: "sine.inOut",
-      });
 
-      // Animate marquee tracks on load
+      //  marquee 
       const marqueeTracks = document.querySelectorAll('.marquee-track');
       marqueeTracks.forEach((track, index) => {
         gsap.from(track, {
@@ -163,14 +145,6 @@ export default function Hero({ compact = false }) {
 
       {/* Gradient  */}
       <div className="absolute inset-0 pointer-events-none bg-gradient-hero" />
-
-      {/* Watermark */}
-      <div
-        ref={watermark}
-        className="absolute -top-10 -right-10 lg:right-20 lg:top-10 text-[12rem] lg:text-[20rem] font-display font-bold text-surface-raised/30 select-none leading-none"
-      >
-        S
-      </div>
 
       {/* Hero*/}
       <div className="max-w-4xl w-full mx-auto relative z-10 text-center">
