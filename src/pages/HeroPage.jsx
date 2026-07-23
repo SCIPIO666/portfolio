@@ -1,11 +1,12 @@
-import React, { useRef } from "react";
+import React, { useRef, useEffect } from "react";
 import gsap from "gsap";
+import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
 
 import CallToActionButton from "../components/CallToActionButton";
 
-gsap.registerPlugin(useGSAP);
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Hero({ compact = false }) {
   const hero = useRef();
@@ -16,29 +17,83 @@ export default function Hero({ compact = false }) {
   const status = useRef();
   const word = 'DEV SCIPIO· ';
 
+  // Handle font loading and refresh
+  useEffect(() => {
+    // Refresh ScrollTrigger after fonts load
+    const refreshOnFontLoad = () => {
+      ScrollTrigger.refresh();
+    };
+
+    // Check if document.fonts is available
+    if (document.fonts) {
+      document.fonts.ready.then(refreshOnFontLoad);
+    }
+
+    // Refresh on window load
+    window.addEventListener('load', refreshOnFontLoad);
+    
+    return () => {
+      window.removeEventListener('load', refreshOnFontLoad);
+    };
+  }, []);
+
   useGSAP(
     () => {
+      // no pin for small screens
+      const isMobile = window.innerWidth < 768;
 
-      gsap.to(hero.current, {
-      scale: 0.85,
-      opacity: 0,
-      ease: 'none',
-      scrollTrigger: {
-        trigger: hero.current,
-        start: 'top top',
-        end: '+=100%',
-        pin: true,
-        scrub: true,
-      },
-    });
+      // mobile fallback for pin
+      const mm = gsap.matchMedia();
 
+      // big screens
+      mm.add("(min-width: 768px)", () => {
+        // pin + scale
+        gsap.to(hero.current, {
+          scale: 0.85,
+          opacity: 0,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: hero.current,
+            start: 'top top',
+            end: '+=100%',
+            pin: true,
+            scrub: true,
+            invalidateOnRefresh: true,
+            onUpdate: (self) => {
+              // Optional: Add a subtle parallax to inner content
+              const progress = self.progress;
+              if (progress > 0.5) {
+                // Additional effects when almost faded out
+              }
+            }
+          },
+        });
+      });
+
+      // mobile - no pin, normal scroll>>simple fade in
+      mm.add("(max-width: 767px)", () => {
+       
+        gsap.to(hero.current, {
+          opacity: 0.3,
+          scale: 0.95,
+          ease: 'none',
+          scrollTrigger: {
+            trigger: hero.current,
+            start: 'top top',
+            end: 'bottom top',
+            scrub: true,
+          },
+        });
+      });
+
+      // timeline
       const tl = gsap.timeline({
         defaults: {
           ease: "power3.out",
         },
       });
 
-      // Intro
+      // intro
       tl.from(
         intro.current,
         {
@@ -50,7 +105,7 @@ export default function Hero({ compact = false }) {
         "-=1"
       );
 
-      //name
+      //  name split
       const nameElement = nameRef.current;
       const chars = new SplitType(nameElement, { 
         types: "chars",
@@ -61,7 +116,7 @@ export default function Hero({ compact = false }) {
         char.style.display = "inline-block";
       });
 
-      // name fade in
+      // name
       tl.from(
         chars.chars,
         {
@@ -75,7 +130,7 @@ export default function Hero({ compact = false }) {
         "-=0.2"
       );
 
-      // Title animation
+      // title
       tl.from(
         title.current,
         {
@@ -87,7 +142,7 @@ export default function Hero({ compact = false }) {
         "-=0.3"
       );
 
-      // Buttons animation
+      // buttons 
       tl.from(
         buttons.current.children,
         {
@@ -101,7 +156,7 @@ export default function Hero({ compact = false }) {
         "-=0.4"
       );
 
-      // Status 
+      // status 
       tl.from(
         status.current,
         {
@@ -111,8 +166,7 @@ export default function Hero({ compact = false }) {
         "-=0.2"
       );
 
-
-      //  marquee 
+      // marquee 
       const marqueeTracks = document.querySelectorAll('.marquee-track');
       marqueeTracks.forEach((track, index) => {
         gsap.from(track, {
@@ -124,8 +178,17 @@ export default function Hero({ compact = false }) {
         });
       });
 
+      // cleanup 
+      return () => {
+        // killing scroll triggers
+        ScrollTrigger.getAll().forEach(st => {
+          if (st.trigger === hero.current) {
+            st.kill();
+          }
+        });
+      };
+
     },
-    
     { scope: hero }
   );
 
@@ -133,9 +196,13 @@ export default function Hero({ compact = false }) {
     <section
       ref={hero}
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 pt-0 pb-12 relative overflow-hidden"
+      className="relative min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 pt-0 pb-12 overflow-hidden"
+      style={{ 
+        transformOrigin: 'center center',
+        willChange: 'transform, opacity'
+      }}
     >
-      {/* Marquee */}
+      {/* marquee */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-center gap-6 opacity-[0.07]">
         {[0, 1, 2].map((row) => (
           <div 
@@ -158,10 +225,10 @@ export default function Hero({ compact = false }) {
         ))}
       </div>
 
-      {/* Gradient  */}
+      {/* overlay */}
       <div className="absolute inset-0 pointer-events-none bg-gradient-hero" />
 
-      {/* Hero*/}
+      {/* hero */}
       <div className="max-w-4xl w-full mx-auto relative z-10 text-center">
         <p
           ref={intro}
@@ -212,7 +279,6 @@ export default function Hero({ compact = false }) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success" />
           </span>
-
           <span>Available for freelance work</span>
         </div>
       </div>

@@ -5,8 +5,12 @@ import WorkPage from './WorkPage'
 import Sidebar from '../components/Sidebar'
 import Hero from './HeroPage'
 import Footer from '../components/Footer'
+import useLenis from '../lib/useLenis'
 
 export default function SinglePage() {
+ //lenis init
+  useLenis();
+
   return (
     <div className='pt-0 mt-0'>
       {/* socialLinks & emailLink in big screens only */}
