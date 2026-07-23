@@ -180,6 +180,10 @@
     background-color: var(--color-primary);
     transform: translateX('10px');
   }
+
+  .non-break{
+   overflow-wrap: break-word;
+  }
 .custom-header-ctn{
   padding-left: .5rem;
     display:flex;

@@ -236,13 +236,30 @@ export default function Hero({ compact = false }) {
         >
           Hi, my name is
         </p>
-
-        <h1
+        {
+        window.innerWidth < 768 ?
+             <h1
+                  ref={nameRef}
+                  className="text-hero  font-display font-bold leading-[1.08] text-ink mb-3 flex flex-col gap-2"
+                >
+                 <h1>Esphoney </h1> 
+                 <span><h1> Ondicho </h1> <h1> Scipio</h1></span>
+                
+              </h1> 
+                :
+              <h1
+                  ref={nameRef}
+                  className="text-hero mr-0 font-display font-bold leading-[1.08] text-ink mb-3"
+                >
+                  Esphoney Ondicho Scipio.
+              </h1>
+        }
+        {/* <h1
           ref={nameRef}
-          className="text-hero font-display font-bold leading-[1.08] text-ink mb-3"
+          className="text-hero mr-0 font-display font-bold leading-[1.08] text-ink mb-3"
         >
           Esphoney Ondicho Scipio.
-        </h1>
+        </h1> */}
 
         <h2
           ref={title}

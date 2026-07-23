@@ -206,6 +206,12 @@ export default function DevScipioAnimation() {
         ease: 'elastic.out(1, 0.4)',
         transformOrigin: '50% 50%',
         svgOrigin: '100 100',
+      })
+        .to(logoGroupRef.current, {
+        // scale: 0,
+        // opacity: 0.2,
+        color: 'red',
+        duration: 0.5,
       });
 
     window.masterTimeline = masterTL;
