@@ -2,46 +2,115 @@ import { useState, useEffect } from 'react'
 import Emblem from './Emblem'
 import Label from './Label'
 import CallToActionButton from './CallToActionButton'
+import { scrollToElement } from '../lib/useSmoothScroll'
 
 const NAV_LINKS = [
-  { location: '#about', label: <Label number="01." text="About"/>},
-  { location: '#experience', label: <Label number="02." text="Experience"/> },
-  { location: '#work', label: <Label number="03." text="Work"/> },
-  { location: '#contact', label: <Label number="04." text="Contact"/> },
-  { location: '/resume.pdf', label: <CallToActionButton text="Resume" callback={()=>{}}/> },
+  { id: 'about', number: '01.', text: 'About' },
+  { id: 'experience', number: '02.', text: 'Experience' },
+  { id: 'work', number: '03.', text: 'Work' },
+  { id: 'contact', number: '04.', text: 'Contact' },
 ]
 
 export default function Navbar() {
   const [open, setOpen] = useState(false)
+  const [activeSection, setActiveSection] = useState('')
 
-  // Close 
+  //  navigation click with smooth scroll
+  const handleNavClick = (sectionId, e) => {
+    e.preventDefault();
+    setOpen(false);
+    
+    // delay for menu close
+    setTimeout(() => {
+      // offset for sticky navbar
+      const navbar = document.querySelector('header');
+      const navbarHeight = navbar ? navbar.offsetHeight : 80;
+      
+      scrollToElement(sectionId, {
+        offset: -navbarHeight - 20, //  extra padding
+        duration: 1.5,
+      });
+    }, 100);
+  };
+
+  //  active section on scroll
+  useEffect(() => {
+    const sections = NAV_LINKS.map(link => document.getElementById(link.id));
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        });
+      },
+      {
+        rootMargin: '-50% 0px -50% 0px', //  section is in the middle
+        threshold: 0,
+      }
+    );
+
+    sections.forEach(section => {
+      if (section) observer.observe(section);
+    });
+
+    return () => {
+      sections.forEach(section => {
+        if (section) observer.unobserve(section);
+      });
+    };
+  }, []);
+
+  // escape key close menu
+  useEffect(() => {
+    const handleEscape = (e) => {
+      if (e.key === 'Escape') setOpen(false);
+    };
+    document.addEventListener('keydown', handleEscape);
+    return () => document.removeEventListener('keydown', handleEscape);
+  }, []);
+
+  // close menu
   useEffect(() => {
     const handleClickOutside = (e) => {
-      const nav = document.getElementById('mobile-nav')
-      const button = document.querySelector('button[aria-label]')
+      const nav = document.getElementById('mobile-nav');
+      const button = document.querySelector('button[aria-label]');
       if (open && nav && !nav.contains(e.target) && !button?.contains(e.target)) {
-        setOpen(false)
+        setOpen(false);
       }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [open])
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [open]);
 
+  //  mobile menu open
   useEffect(() => {
     if (open) {
-      document.body.style.overflow = 'hidden'
+      document.body.style.overflow = 'hidden';
     } else {
-      document.body.style.overflow = 'unset'
+      document.body.style.overflow = 'unset';
     }
     return () => {
-      document.body.style.overflow = 'unset'
-    }
-  }, [open])
+      document.body.style.overflow = 'unset';
+    };
+  }, [open]);
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
-      <nav className="w-full flex items-center justify-between px-6 py-2">  {/* Changed py-4 to py-2 */}
-        <a href="#hero" className="group flex items-center gap-2" aria-label="Home">
+      <nav className="w-full flex items-center justify-between px-6 py-2">
+        <a 
+          href="#hero" 
+          className="group flex items-center gap-2" 
+          aria-label="Home"
+          onClick={(e) => {
+            e.preventDefault();
+            scrollToElement('hero', {
+              offset: -20,
+              duration: 1.2,
+            });
+          }}
+        >
           <Emblem
             size={45}
             className="transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110"
@@ -51,14 +120,35 @@ export default function Navbar() {
 
         {/* desktop */}
         <div className="hidden md:flex gap-6 items-center">
-          {NAV_LINKS.map(({ location, label }) => (
-            <a href={location} key={location} className="">
-              {label}
+          {NAV_LINKS.map(({ id, number, text }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              onClick={(e) => handleNavClick(id, e)}
+              className={`relative font-mono text-sm transition-colors duration-300 group ${
+                activeSection === id ? 'text-primary' : 'text-muted hover:text-ink'
+              }`}
+            >
+              <span className="text-primary/60 mr-1">{number}</span>
+              {text}
+              {/* Active indicator line */}
+              <span 
+                className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                  activeSection === id ? 'w-full' : 'w-0 group-hover:w-full'
+                }`}
+              />
             </a>
           ))}
+          <CallToActionButton 
+            text="Resume" 
+            callback={() => {
+              // download
+              window.open('/resume.pdf', '_blank');
+            }}
+          />
         </div>
 
-        {/*  hamburger menu */}
+        {/* hamburger menu  */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -85,7 +175,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* overlay */}
+      {/*  Overlay */}
       <div
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -93,7 +183,7 @@ export default function Navbar() {
         onClick={() => setOpen(false)}
       />
 
-      {/* slides from right */}
+      {/* mobile drawer */}
       <div
         id="mobile-nav"
         className={`fixed top-0 right-0 h-screen w-4/5 pt-0 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden ${
@@ -101,18 +191,28 @@ export default function Navbar() {
         }`}
       >
         <div className="flex flex-col items-center justify-center h-full gap-8 px-6">
-          {NAV_LINKS.map(({ location, label }) => (
+          {NAV_LINKS.map(({ id, number, text }) => (
             <a
-              href={location}
-              key={location}
-              className="text-lg hover:text-primary transition-colors"
-              onClick={() => setOpen(false)} 
+              key={id}
+              href={`#${id}`}
+              className={`text-lg transition-colors duration-300 ${
+                activeSection === id ? 'text-primary' : 'text-muted hover:text-ink'
+              }`}
+              onClick={(e) => handleNavClick(id, e)}
             >
-              {label}
+              <span className="text-primary/60 mr-2">{number}</span>
+              {text}
             </a>
           ))}
+          <CallToActionButton 
+            text="Resume" 
+            callback={() => {
+              window.open('/resume.pdf', '_blank');
+              setOpen(false);
+            }}
+          />
         </div>
       </div>
     </header>
-  )
+  );
 }
