@@ -14,7 +14,7 @@ const NAV_LINKS = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
 
-  // Close menu 
+  // Close 
   useEffect(() => {
     const handleClickOutside = (e) => {
       const nav = document.getElementById('mobile-nav')
@@ -40,7 +40,7 @@ export default function Navbar() {
 
   return (
     <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
-      <nav className="w-full flex items-center justify-between px-6 py-4">
+      <nav className="w-full flex items-center justify-between px-6 py-2">  {/* Changed py-4 to py-2 */}
         <a href="#hero" className="group flex items-center gap-2" aria-label="Home">
           <Emblem
             size={45}
@@ -58,7 +58,7 @@ export default function Navbar() {
           ))}
         </div>
 
-        {/* mobile hamburger */}
+        {/*  hamburger menu */}
         <button
           type="button"
           onClick={() => setOpen((v) => !v)}
@@ -85,7 +85,7 @@ export default function Navbar() {
         </button>
       </nav>
 
-      {/* Mobile overlay */}
+      {/* overlay */}
       <div
         className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
@@ -93,7 +93,7 @@ export default function Navbar() {
         onClick={() => setOpen(false)}
       />
 
-      {/* Mobile drawer - slides from right */}
+      {/* slides from right */}
       <div
         id="mobile-nav"
         className={`fixed top-0 right-0 h-screen w-4/5 pt-0 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden ${

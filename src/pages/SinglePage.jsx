@@ -5,15 +5,14 @@ import WorkPage from './WorkPage'
 import Sidebar from '../components/Sidebar'
 import Hero from './HeroPage'
 import Footer from '../components/Footer'
+
 export default function SinglePage() {
   return (
-    
-    <div>
-
+    <div className='pt-0 mt-0'>
       {/* SocialLinks + EmailLink lg+ only */}
       <Sidebar />
 
-      <main className="lg:ml-[10%] min-h-screen pt-24 md:mt-32 lg:mt-32">
+      <main className="lg:ml-[10%] min-h-screen pt-0">  
         <Hero />
         <AboutPage />
         <ExperiencePage />

@@ -87,7 +87,7 @@ export default function Hero({ compact = false }) {
         "-=0.4"
       );
 
-      // Status animation
+      // Status 
       tl.from(
         status.current,
         {
@@ -118,7 +118,7 @@ export default function Hero({ compact = false }) {
     <section
       ref={hero}
       id="hero"
-      className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 pt-10 pb-12 relative overflow-hidden"
+      className="min-h-screen flex items-center justify-center px-6 md:px-12 lg:px-24 pt-0 pb-12 relative overflow-hidden"
     >
       {/* Marquee */}
       <div className="pointer-events-none absolute inset-0 flex flex-col justify-center gap-6 opacity-[0.07]">
