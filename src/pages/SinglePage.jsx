@@ -6,7 +6,7 @@ import Sidebar from '../components/Sidebar'
 import Hero from './HeroPage'
 import Footer from '../components/Footer'
 import useLenis from '../lib/useLenis'
-
+import ScrollProgress from '../components/ScrollProgress';
 export default function SinglePage() {
  //lenis init
   useLenis();
@@ -15,7 +15,7 @@ export default function SinglePage() {
     <div className='pt-0 mt-0'>
       {/* socialLinks & emailLink in big screens only */}
       <Sidebar />
-
+      <ScrollProgress />
       <main className="lg:ml-[10%] min-h-screen pt-0">  
         <Hero />
         <AboutPage />
