@@ -5,15 +5,18 @@ import WorkPage from './WorkPage'
 import Sidebar from '../components/Sidebar'
 import Hero from './HeroPage'
 import Footer from '../components/Footer'
-export default function SinglePage() {
-  return (
-    
-    <div>
+import useLenis from '../lib/useLenis'
 
-      {/* SocialLinks + EmailLink lg+ only */}
+export default function SinglePage() {
+ //lenis init
+  useLenis();
+
+  return (
+    <div className='pt-0 mt-0'>
+      {/* socialLinks & emailLink in big screens only */}
       <Sidebar />
 
-      <main className="lg:ml-[10%] min-h-screen pt-24 md:mt-32 lg:mt-32">
+      <main className="lg:ml-[10%] min-h-screen pt-0">  
         <Hero />
         <AboutPage />
         <ExperiencePage />
