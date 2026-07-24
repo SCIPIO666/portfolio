@@ -21,8 +21,9 @@ export default function WorkPage() {
     // });
   return (
     <section ref={sectionRef} id='work' className='min-h-screen pt-24 md:mt-32 lg:mt-32'>
-             <PageHeader text='Work' number='03.'/>
+             <PageHeader text='Projects I have Worked On' number='03.'/>
              <p ref={contentRef}>work content</p>
+
     </section>
 
   )

@@ -14,6 +14,13 @@ export default function AboutPage() {
     scrub: false,
   });
 
+  //  specific content 
+  // useSectionReveal(contentRef, {
+  //   from: { opacity: 0, y: 30 },
+  //   to: { opacity: 1, y: 0 },
+  //   start: 'top 85%',
+  //   scrub: false,
+  // });
   return (
     <section 
       ref={sectionRef} 
@@ -28,7 +35,7 @@ export default function AboutPage() {
           
           <div className='space-y-4 mt-4'>
             <p className='text-lg leading-relaxed'>
-              <span className='text-primary-soft font-mono'>Hello! My name is Scipio,</span> and I have a compulsion for automating the mundane. If I have to do something twice, I start wondering whether I can build software to eliminate it entirely.
+              <span className='text-primary-soft font-mono'>Hello! My name is Scipio,</span> and I have a compulsion for automating repetitive tasks. If I have to do something twice, I start wondering whether I can build software to eliminate it entirely.
             </p>
 
             <p className='text-base leading-relaxed text-gray-300'>
@@ -40,7 +47,7 @@ export default function AboutPage() {
             </p>
 
             <p className='text-base leading-relaxed text-gray-300'>
-              So I rolled up my sleeves and dove headfirst into <span className='text-primary-soft font-mono'>web development</span>—all because I wanted to replace a single Excel sheet. Countless late-night debugging sessions, endless documentation deep-dives, courses, tutorials, and more coffee than I'd like to admit later, I realized something important: it was never just about the inventory system. What truly drove me was the challenge of eliminating repetitive work by building tools that make people's lives easier.
+              So I rolled up my sleeves and dove headfirst into <span className='text-primary-soft font-mono'>web development</span>—all because I wanted to replace a single Excel sheet. After countless late-night debugging sessions, endless documentation deep-dives, courses, tutorials, and more coffee than I'd like to admit, I realized something important: it was never just about the inventory system. What truly drove me was the challenge of eliminating repetitive work by building tools that make people's lives easier.
             </p>
 
             <p className='text-base leading-relaxed text-gray-300'>
@@ -53,21 +60,21 @@ export default function AboutPage() {
           </div>
         </div>
 
-        {/* Right */}
-        <div className='w-full lg:w-[45%] flex justify-center lg:justify-end items-start mt-8 lg:mt-0'>
-          <div className='relative group'>
-            {/*  background glow  */}
+        {/* right */}
+        <div className='w-full lg:w-[45%] flex justify-center items-stretch mt-8 lg:mt-32'>
+          <div className='relative group w-full max-w-[500px]'>
+            {/* background glow */}
             <div className='absolute -inset-1 bg-primary/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500'></div>
             
             {/* container - border and shadow */}
-            <div className='relative rounded-2xl border-2 border-primary/60 shadow-2xl shadow-primary/10 overflow-hidden bg-dark-bg transition-all duration-300 hover:shadow-primary/20 hover:border-primary'>
+            <div className='relative rounded-2xl border-2 border-primary/60 shadow-2xl shadow-primary/10 overflow-hidden bg-dark-bg transition-all duration-300 hover:shadow-primary/20 hover:border-primary h-full'>
               <img 
                 src={me}
                 alt='Scipio - Software Developer'
-                className='w-full max-w-[400px] lg:max-w-[450px] h-auto object-cover aspect-square'
+                className='w-full h-full object-cover'
               />
               
-              {/* overlay gradient for depth */}
+              {/* Overlay gradient  */}
               <div className='absolute inset-0 bg-gradient-to-t from-dark-bg/20 via-transparent to-transparent'></div>
             </div>
           </div>
