@@ -216,6 +216,8 @@
     margin-left:1rem;
     margin-right: 1rem;
 }
+
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
