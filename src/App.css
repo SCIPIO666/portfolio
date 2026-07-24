@@ -180,12 +180,15 @@
     background-color: var(--color-primary);
     transform: translateX('10px');
   }
+
+  .non-break{
+   overflow-wrap: break-word;
+  }
 .custom-header-ctn{
   padding-left: .5rem;
     display:flex;
     align-items:center;
     gap:1rem;
-
     margin-bottom:4rem;
 }
 
@@ -212,6 +215,8 @@
     margin-left:1rem;
     margin-right: 1rem;
 }
+
+
 @keyframes marquee {
   from { transform: translateX(0); }
   to { transform: translateX(-50%); }
