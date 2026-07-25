@@ -5,10 +5,15 @@ import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 
+
 function Laptop() {
   const { scene } = useGLTF('/models/laptop.glb')
   const pivotRef = useRef()
   const [isOpen, setIsOpen] = useState(false)
+  
+  const CLOSED_ANGLE = Math.PI / 4   
+  const OPEN_ANGLE = -Math.PI / 3 //60 degrees
+
 useEffect(() => {
   let screenMeshes = []
   let keyboardMesh
@@ -33,20 +38,21 @@ useEffect(() => {
     )
 
     scene.add(pivot)
-    screenMeshes.forEach((mesh) => pivot.attach(mesh))
-    pivotRef.current = pivot
+  screenMeshes.forEach((mesh) => pivot.attach(mesh))
+  pivot.rotation.x = CLOSED_ANGLE   //closed on mount
+  pivotRef.current = pivot
   }
 }, [scene])
 
-  useEffect(() => {
-    if (pivotRef.current) {
-      gsap.to(pivotRef.current.rotation, {
-  x: isOpen ? -Math.PI / 5 : 0,
-  duration: 1.2,
-  ease: 'power3.inOut',
-})
-    }
-  }, [isOpen])
+useEffect(() => {
+  if (pivotRef.current) {
+    gsap.to(pivotRef.current.rotation, {
+      x: isOpen ? OPEN_ANGLE : CLOSED_ANGLE,
+      duration: 2,
+      ease: 'power3.inOut',
+    })
+  }
+}, [isOpen])
 
  return (
   <primitive
