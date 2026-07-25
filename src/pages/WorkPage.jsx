@@ -44,22 +44,22 @@ export default function WorkPage() {
 
       <div
         ref={stageRef}
-        className="relative w-full h-[70vh] grid grid-cols-2 grid-rows-2 border border-[var(--color-border)] rounded-[var(--radius-panel)] overflow-hidden"
+        className="relative w-full h-[50vh] grid grid-cols-2 grid-rows-2 border border-[var(--color-border)] rounded-[var(--radius-panel)] overflow-hidden"
       >
         <div className="absolute inset-0 flex items-center justify-center z-0">
           {/* <LaptopScene /> goes here later */}
         </div>
 
-        <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+        <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] border-r-primary border-b-primary bg-[var(--color-surface)]">
           <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">Front&#8209;End</h1>
         </div>
 
-        <div ref={backRef} className="relative z-10 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-surface)]">
+        <div ref={backRef} className="relative z-10 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-surface)] border-l-primary border-b-primary">
           <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">Back&#8209;End</h1>
         </div>
 
         <div ref={fullRef} className="relative z-10 col-span-2 flex items-center justify-center bg-[var(--color-surface)]">
-          <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)]">Full&#8209;Stack</h1>
+          <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight )] border-t-primary">Full&#8209;Stack</h1>
         </div>
       </div>
     </section>

@@ -9,53 +9,54 @@ function Laptop() {
   const { scene } = useGLTF('/models/laptop.glb')
   const pivotRef = useRef()
   const [isOpen, setIsOpen] = useState(false)
+useEffect(() => {
+  let screenMeshes = []
+  let keyboardMesh
 
-  useEffect(() => {
-    let screenMesh, keyboardMesh
-    scene.traverse((child) => {
-      if (child.name.includes('Screen')) screenMesh = child
+  scene.traverse((child) => {
+    if (child.isMesh) {
+      if (child.name.includes('Screen')) screenMeshes.push(child)
       if (child.name.includes('Keyboard')) keyboardMesh = child
-    })
-
-    if (screenMesh && keyboardMesh) {
-      const screenBox = new THREE.Box3().setFromObject(screenMesh)
-      const keyboardBox = new THREE.Box3().setFromObject(keyboardMesh)
-
-      const pivot = new THREE.Object3D()
-      pivot.position.set(
-        screenBox.min.x + (screenBox.max.x - screenBox.min.x) / 2,
-        screenBox.min.y,
-        Math.min(screenBox.max.z, keyboardBox.max.z)
-      )
-
-      scene.add(pivot)
-      pivot.attach(screenMesh)
-      pivotRef.current = pivot
     }
-  }, [scene])
+  })
+
+  if (screenMeshes.length && keyboardMesh) {
+    const screenBox = new THREE.Box3()
+    screenMeshes.forEach((mesh) => screenBox.union(new THREE.Box3().setFromObject(mesh)))
+    const keyboardBox = new THREE.Box3().setFromObject(keyboardMesh)
+
+    const pivot = new THREE.Object3D()
+    pivot.position.set(
+      screenBox.min.x + (screenBox.max.x - screenBox.min.x) / 2,
+      screenBox.min.y,
+      Math.min(screenBox.max.z, keyboardBox.max.z)
+    )
+
+    scene.add(pivot)
+    screenMeshes.forEach((mesh) => pivot.attach(mesh))
+    pivotRef.current = pivot
+  }
+}, [scene])
 
   useEffect(() => {
     if (pivotRef.current) {
       gsap.to(pivotRef.current.rotation, {
-        x: isOpen ? -Math.PI / 2.2 : 0,
-        duration: 1.2,
-        ease: 'power3.inOut',
-      })
+  x: isOpen ? -Math.PI / 5 : 0,
+  duration: 1.2,
+  ease: 'power3.inOut',
+})
     }
   }, [isOpen])
 
-  return (
-    <>
-      <primitive object={scene} />
-      <mesh
-        position={[0.06, 0.05, -0.15]}
-        onClick={() => setIsOpen(v => !v)}
-        visible={false}
-      >
-        <boxGeometry args={[0.05, 0.05, 0.05]} />
-      </mesh>
-    </>
-  )
+ return (
+  <primitive
+    object={scene}
+    onClick={(e) => {
+      e.stopPropagation()
+      setIsOpen(v => !v)
+    }}
+  />
+)
 }
 
 export default function LaptopScene() {
