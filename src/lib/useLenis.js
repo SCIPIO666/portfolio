@@ -18,6 +18,7 @@ export function useLenis() {
       touchMultiplier: 1.5,
     });
 
+    window.__lenis = lenis
     // lenis + scrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
@@ -47,6 +48,7 @@ export function useLenis() {
       window.removeEventListener('resize', refreshScrollTrigger);
       window.removeEventListener('load', refreshScrollTrigger);
       ScrollTrigger.getAll().forEach(st => st.kill());
+      window.__lenis = null
     };
   }, []);
 }
