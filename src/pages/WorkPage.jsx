@@ -20,23 +20,49 @@ export default function WorkPage() {
     start: 'top 80%',
     scrub: false,
   })
+useGSAP(() => {
+  const mm = gsap.matchMedia()
 
-  useGSAP(() => {
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: sectionRef.current,
-        start: 'top top',
-        end: '+=100%',
-        scrub: 1,
-        pin: true,
-        // markers: true, // uncomment while testing, remove after
-      },
-    })
+  mm.add(
+    {
+      isDesktop: '(min-width: 1024px)',
+      isMobile: '(max-width: 1023px)',
+    },
+    (context) => {
+      const { isDesktop } = context.conditions
 
-    tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
-      .to(backRef.current,  { xPercent: 100,  opacity: 0, ease: 'none' }, '<')
-      .to(fullRef.current,  { yPercent: 100,  opacity: 0, ease: 'none' }, '<')
-  }, { scope: stageRef })
+      if (isDesktop) {
+        //  pinned, scroll-scrubbed ,slider animation
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top top',
+            end: '+=100%',
+            scrub: 1,
+            pin: true,
+          },
+        })
+
+        tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
+          .to(backRef.current,  { xPercent: 100,  opacity: 0, ease: 'none' }, '<')
+          .to(fullRef.current,  { yPercent: 100,  opacity: 0, ease: 'none' }, '<')
+      } else {
+        // mobile —  stagger reveal no pin/no scroll-scrub
+        gsap.from([frontRef.current, backRef.current, fullRef.current], {
+          opacity: 0,
+          y: 40,
+          stagger: 0.15,
+          duration: 0.6,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 75%',
+          },
+        })
+      }
+    }
+  )
+}, { scope: stageRef })
 
   return (
     <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
@@ -44,7 +70,7 @@ export default function WorkPage() {
 
       <div
         ref={stageRef}
-        className="relative w-full h-[50vh] grid grid-cols-2 grid-rows-2 border border-[var(--color-border)] rounded-[var(--radius-panel)] overflow-hidden"
+        className="relative w-full h-[50vh] grid grid-cols-2 grid-rows-2  rounded-[var(--radius-panel)] overflow-hidden"
       >
         <div className="absolute inset-0 flex items-center justify-center z-0">
           {/* <LaptopScene /> goes here later */}
