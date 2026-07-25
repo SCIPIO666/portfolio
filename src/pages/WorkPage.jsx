@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import PageHeader from '../components/PageHeader'
 import { useSectionReveal } from '../components/ScrollEffects'
-
+import LaptopScene from '../components/LaptopScene'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function WorkPage() {
@@ -13,6 +13,7 @@ export default function WorkPage() {
   const frontRef = useRef(null)
   const backRef = useRef(null)
   const fullRef = useRef(null)
+  const laptopRef = useRef()
 
   useSectionReveal(sectionRef, {
     from: { opacity: 0, y: 60 },
@@ -46,6 +47,16 @@ useGSAP(() => {
         tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
           .to(backRef.current,  { xPercent: 100,  opacity: 0, ease: 'none' }, '<')
           .to(fullRef.current,  { yPercent: 100,  opacity: 0, ease: 'none' }, '<')
+        tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
+
+        tl.to(backRef.current,  { xPercent: 100,  opacity: 0, ease: 'none' }, '<')
+        .to(fullRef.current,  { yPercent: 100,  opacity: 0, ease: 'none' }, '<')
+        .to({}, {
+          duration: 1,
+          onUpdate: function () {
+            laptopRef.current?.setOpenProgress(this.progress())
+          },
+        })
       } else {
         // mobile —  stagger reveal no pin/no scroll-scrub
         gsap.from([frontRef.current, backRef.current, fullRef.current], {
@@ -73,7 +84,7 @@ useGSAP(() => {
         className="relative w-full h-[50vh] grid grid-cols-2 grid-rows-2  rounded-[var(--radius-panel)] overflow-hidden"
       >
         <div className="absolute inset-0 flex items-center justify-center z-0">
-          {/* <LaptopScene /> goes here later */}
+          <LaptopScene ref={laptopRef} />.
         </div>
 
         <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] border-r-primary border-b-primary bg-[var(--color-surface)]">

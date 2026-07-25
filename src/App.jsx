@@ -20,9 +20,9 @@ function App() {
   return (
     <>
     <Navbar/>
-    <div style={{ width: '100%', height: '500px' }}>
+    {/* <div style={{ width: '100%', height: '500px' }}>
       <LaptopScene />
-    </div>
+    </div> */}
       <SinglePage/>
     </>
   )

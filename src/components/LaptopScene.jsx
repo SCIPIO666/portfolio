@@ -1,18 +1,26 @@
 import { Canvas } from '@react-three/fiber'
 import { useGLTF, OrbitControls, Environment } from '@react-three/drei'
+import { forwardRef, useImperativeHandle } from 'react'
 
 import { useEffect, useRef, useState } from 'react'
 import * as THREE from 'three'
 import { gsap } from 'gsap'
 
 
-function Laptop() {
+const Laptop = forwardRef(function Laptop(props, ref) {
   const { scene } = useGLTF('/models/laptop.glb')
   const pivotRef = useRef()
-  const [isOpen, setIsOpen] = useState(false)
-  
-  const CLOSED_ANGLE = Math.PI / 4   
-  const OPEN_ANGLE = -Math.PI / 3 //60 degrees
+
+  const CLOSED_ANGLE = Math.PI / 4
+  const OPEN_ANGLE = -Math.PI / 3
+
+  useImperativeHandle(ref, () => ({
+    setOpenProgress: (progress) => {
+      if (pivotRef.current) {
+        pivotRef.current.rotation.x = gsap.utils.interpolate(CLOSED_ANGLE, OPEN_ANGLE, progress)
+      }
+    },
+  }))
 
 useEffect(() => {
   let screenMeshes = []
@@ -44,36 +52,20 @@ useEffect(() => {
   }
 }, [scene])
 
-useEffect(() => {
-  if (pivotRef.current) {
-    gsap.to(pivotRef.current.rotation, {
-      x: isOpen ? OPEN_ANGLE : CLOSED_ANGLE,
-      duration: 2,
-      ease: 'power3.inOut',
-    })
-  }
-}, [isOpen])
+  return <primitive object={scene} />
+})
 
- return (
-  <primitive
-    object={scene}
-    onClick={(e) => {
-      e.stopPropagation()
-      setIsOpen(v => !v)
-    }}
-  />
-)
-}
-
-export default function LaptopScene() {
+const LaptopScene = forwardRef(function LaptopScene(props, ref) {
   return (
     <Canvas camera={{ position: [0.6, 0.6, 1.6], fov: 45 }}>
       <ambientLight intensity={0.3} />
       <directionalLight position={[2, 3, 2]} intensity={2} />
       <directionalLight position={[-2, 1, -1]} intensity={0.4} />
       <Environment preset="city" />
-      <Laptop />
-      <OrbitControls />
+      <Laptop ref={ref} />
+      <OrbitControls enabled={false} />
     </Canvas>
   )
-}
+})
+
+export default LaptopScene
