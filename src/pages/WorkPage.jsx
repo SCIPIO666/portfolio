@@ -19,6 +19,9 @@ export default function WorkPage() {
   const fullRef = useRef(null)
   const laptopRef = useRef()
   const cardRefs = useRef([])
+  const bounceRefs = useRef([])
+const bounceTweenRef = useRef(null)
+const cardsVisibleRef = useRef(false)
   const [selectedProject, setSelectedProject] = useState(null)
 
   const cardOffsets = [
@@ -51,7 +54,6 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            // pinned, scroll-scrubbed, slider animation
             const tl = gsap.timeline({
               scrollTrigger: {
                 trigger: sectionRef.current,
@@ -59,24 +61,31 @@ export default function WorkPage() {
                 end: '+=100%',
                 scrub: 1,
                 pin: true,
+                onUpdate: () => {
+                  const cardsVisible = tl.progress() > 0.8
+
+                  if (cardsVisible && !cardsVisibleRef.current) {
+                    cardsVisibleRef.current = true
+                    bounceTweenRef.current = gsap.to(bounceRefs.current, {
+                      y: '+=10',
+                      duration: 1.4,
+                      ease: 'sine.inOut',
+                      yoyo: true,
+                      repeat: -1,
+                      stagger: { each: 0.15, from: 'random' },
+                    })
+                  } else if (!cardsVisible && cardsVisibleRef.current) {
+                    cardsVisibleRef.current = false
+                    bounceTweenRef.current?.kill()
+                    gsap.set(bounceRefs.current, { y: 0 })
+                  }
+                },
               },
             })
 
-            tl.to(frontRef.current, {
-              xPercent: -100,
-              opacity: 0,
-              ease: 'none',
-            })
-              .to(backRef.current, {
-                xPercent: 100,
-                opacity: 0,
-                ease: 'none',
-              }, '<')
-              .to(fullRef.current, {
-                yPercent: 100,
-                opacity: 0,
-                ease: 'none',
-              }, '<')
+            tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
+              .to(backRef.current, { xPercent: 100, opacity: 0, ease: 'none' }, '<')
+              .to(fullRef.current, { yPercent: 100, opacity: 0, ease: 'none' }, '<')
               .to({}, {
                 duration: 1,
                 onUpdate: function () {
@@ -91,7 +100,6 @@ export default function WorkPage() {
                 ease: 'back.out(1.4)',
               })
           } else {
-            // mobile — stagger reveal no pin/no scroll-scrub
             gsap.from([frontRef.current, backRef.current, fullRef.current], {
               opacity: 0,
               y: 40,
@@ -106,6 +114,10 @@ export default function WorkPage() {
           }
         }
       )
+
+      return () => {
+        bounceTweenRef.current?.kill()
+      }
     },
     { scope: stageRef }
   )
@@ -116,7 +128,7 @@ export default function WorkPage() {
 
       <div
         ref={stageRef}
-        className="relative w-full h-[50vh] grid grid-cols-2 grid-rows-2 rounded-[var(--radius-panel)] overflow-hidden"
+        className="relative w-full h-[100vh] grid grid-cols-2 grid-rows-2 rounded-[var(--radius-panel)] overflow-hidden"
       >
         {/* Laptop & Cards Container */}
         <div className="absolute inset-0 flex items-center justify-center z-0">
@@ -125,9 +137,9 @@ export default function WorkPage() {
               <ProjectCard
                 key={project.id}
                 ref={(el) => (cardRefs.current[i] = el)}
+                innerRef={(el) => (bounceRefs.current[i] = el)}
                 onClick={() => setSelectedProject(project)}
                 title={project.title}
-                tech={project.tech}
               />
             ))}
         </div>
