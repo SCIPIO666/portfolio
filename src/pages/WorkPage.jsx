@@ -7,6 +7,8 @@ import { useSectionReveal } from '../components/ScrollEffects'
 import LaptopScene from '../components/LaptopScene'
 import { projects } from '../data/projects'
 import ProjectModal from '../components/ProjectModal'
+import ProjectCard from '../components/ProjectCard'
+
 gsap.registerPlugin(ScrollTrigger)
 
 export default function WorkPage() {
@@ -119,17 +121,15 @@ export default function WorkPage() {
         {/* Laptop & Cards Container */}
         <div className="absolute inset-0 flex items-center justify-center z-0">
           <LaptopScene ref={laptopRef} />
-          {projects.map((project, i) => (
-            <div
-              key={project.id}
-              ref={(el) => (cardRefs.current[i] = el)}
-              onClick={() => setSelectedProject(project)}
-              className="absolute z-20 w-44 h-56 rounded-xl border border-[var(--color-border)] bg-[var(--color-surface)] p-4 opacity-0 flex flex-col justify-end"
-            >
-              <h3 className="text-white font-bold text-sm">{project.title}</h3>
-              <p className="text-white/50 text-xs mt-1">{project.tech}</p>
-            </div>
-          ))}
+            {projects.map((project, i) => (
+              <ProjectCard
+                key={project.id}
+                ref={(el) => (cardRefs.current[i] = el)}
+                onClick={() => setSelectedProject(project)}
+                title={project.title}
+                tech={project.tech}
+              />
+            ))}
         </div>
 
         {/* Front-End Card */}
