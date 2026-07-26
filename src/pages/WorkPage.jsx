@@ -1,4 +1,4 @@
-import React, { useRef ,useState} from 'react'
+import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -20,12 +20,13 @@ export default function WorkPage() {
   const laptopRef = useRef()
   const cardRefs = useRef([])
   const bounceRefs = useRef([])
-const bounceTweenRef = useRef(null)
-const cardsVisibleRef = useRef(false)
+  const bounceTweenRef = useRef(null)
+  const cardsVisibleRef = useRef(false)
+  const mobileCardRefs = useRef([])
   const [selectedProject, setSelectedProject] = useState(null)
+const isMobile = window.innerWidth < 1024
 
   const cardOffsets = [
-    // rough estimates
     { x: -260, y: -140 },
     { x: 0, y: -180 },
     { x: 260, y: -140 },
@@ -54,6 +55,7 @@ const cardsVisibleRef = useRef(false)
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
+            // full orchestra — unchanged from before
             const tl = gsap.timeline({
               scrollTrigger: {
                 trigger: sectionRef.current,
@@ -100,17 +102,15 @@ const cardsVisibleRef = useRef(false)
                 ease: 'back.out(1.4)',
               })
           } else {
-            gsap.from([frontRef.current, backRef.current, fullRef.current], {
+            // mobile — simple reveal, cards only, no panels/pin/laptop involved, no scroll dependency at all
+            gsap.from(mobileCardRefs.current, {
               opacity: 0,
               y: 40,
               stagger: 0.15,
               duration: 0.6,
               ease: 'power2.out',
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 75%',
-              },
             })
+        
           }
         }
       )
@@ -126,54 +126,74 @@ const cardsVisibleRef = useRef(false)
     <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
       <PageHeader text="Projects I have Worked On" number="03." />
 
-      <div
-        ref={stageRef}
-        className="relative w-full h-[100vh] grid grid-cols-2 grid-rows-2 rounded-[var(--radius-panel)] overflow-hidden"
-      >
-        {/* Laptop & Cards Container */}
-        <div className="absolute inset-0 flex items-center justify-center z-0">
-          <LaptopScene ref={laptopRef} />
-            {projects.map((project, i) => (
-              <ProjectCard
-                key={project.id}
-                ref={(el) => (cardRefs.current[i] = el)}
-                innerRef={(el) => (bounceRefs.current[i] = el)}
-                onClick={() => setSelectedProject(project)}
-                title={project.title}
-              />
-            ))}
-        </div>
+      {/* desktop — full animaion with 3d */}
+      {
+        !isMobile   &&    
 
-        {/* Front-End Card */}
-        <div
-          ref={frontRef}
-          className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] border-r-primary border-b-primary bg-[var(--color-surface)]"
+          <div
+          ref={stageRef}
+          className="lg:grid relative w-full h-[100vh] grid-cols-2 grid-rows-2 rounded-[var(--radius-panel)] overflow-hidden"
         >
-          <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
-            Front‑End
-          </h1>
-        </div>
+          <div className="absolute inset-0 flex items-center justify-center z-0">
+            <LaptopScene ref={laptopRef} />
+              {projects.map((project, i) => (
+                <ProjectCard
+                  key={project.id}
+                  ref={(el) => (cardRefs.current[i] = el)}
+                  innerRef={(el) => (bounceRefs.current[i] = el)}
+                  onClick={() => setSelectedProject(project)}
+                  title={project.title}
+                />
+              ))}
+          </div>
 
-        {/* Back-End Card */}
-        <div
-          ref={backRef}
-          className="relative z-10 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-surface)] border-l-primary border-b-primary"
-        >
-          <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
-            Back‑End
-          </h1>
-        </div>
+          <div
+            ref={frontRef}
+            className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] border-r-primary border-b-primary bg-[var(--color-surface)]"
+          >
+            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
+              Front‑End
+            </h1>
+          </div>
 
-        {/* Full-Stack Card */}
-        <div
-          ref={fullRef}
-          className="relative z-10 col-span-2 flex items-center justify-center bg-[var(--color-surface)]"
-        >
-          <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)] border-t-primary">
-            Full‑Stack
-          </h1>
+          <div
+            ref={backRef}
+            className="relative z-10 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-surface)] border-l-primary border-b-primary"
+          >
+            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
+              Back‑End
+            </h1>
+          </div>
+
+          <div
+            ref={fullRef}
+            className="relative z-10 col-span-2 flex items-center justify-center bg-[var(--color-surface)]"
+          >
+            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)] border-t-primary">
+              Full‑Stack
+            </h1>
+          </div>
         </div>
-      </div>
+      }
+
+
+      {/* mobile- grid, no 3D  */}
+      {
+        isMobile && 
+        <div className="mt-8 grid grid-cols-2 gap-4 place-items-center px-4">
+          {projects.map((project, i) => (
+            <ProjectCard
+              key={project.id}
+              ref={(el) => (mobileCardRefs.current[i] = el)}
+              variant="grid"
+              onClick={() => setSelectedProject(project)}
+              title={project.title}
+            />
+          ))}
+        </div>
+      }
+
+
       <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   )
