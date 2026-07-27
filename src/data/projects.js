@@ -2,6 +2,7 @@ export const projects = [
   {
     id: 1,
     title: 'AICN Training Platform',
+    mainImage: 'https://images.unsplash.com/photo-1581291518633-83b4ebd1d83e?w=400&h=400&fit=crop',
     tech: 'React · Node · Prisma',
     stack: ['React', 'Node.js', 'Prisma', 'PostgreSQL', 'Render'],
     achieved: 'Shipped a full certificate generation pipeline — PDF creation, QR verification, and automated email delivery — deployed live on Render.',
@@ -17,6 +18,7 @@ export const projects = [
   {
     id: 2,
     title: 'EcoTrack Carbon Monitor',
+    mainImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=400&h=400&fit=crop',
     tech: 'Next.js · TypeScript · D3',
     stack: ['Next.js', 'TypeScript', 'D3.js', 'Tailwind', 'Vercel'],
     achieved: 'Built an interactive carbon footprint tracker with real-time data visualization, serving 500+ daily active users.',
@@ -32,6 +34,7 @@ export const projects = [
   {
     id: 3,
     title: 'VibeCheck Analytics Dashboard',
+    mainImage: 'https://images.unsplash.com/photo-1504868584819-f8e8b4b6d7e3?w=400&h=400&fit=crop',
     tech: 'React · Redux · Chart.js',
     stack: ['React', 'Redux Toolkit', 'Chart.js', 'Material-UI', 'AWS'],
     achieved: 'Designed a sentiment analysis dashboard processing 10K+ daily social media mentions with real-time anomaly detection.',
@@ -47,6 +50,7 @@ export const projects = [
   {
     id: 4,
     title: 'SafeSpace Mental Health App',
+    mainImage: 'https://images.unsplash.com/photo-1522542550221-31fd19575a2d?w=400&h=400&fit=crop',
     tech: 'React Native · Firebase · Expo',
     stack: ['React Native', 'Firebase', 'Expo', 'Redux', 'Apple/Google Auth'],
     achieved: 'Launched a cross-platform mental health companion app with 2K+ downloads and 4.8⭐ rating on both app stores.',
@@ -62,6 +66,7 @@ export const projects = [
   {
     id: 5,
     title: 'ArtVault NFT Gallery',
+    mainImage: 'https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=400&h=400&fit=crop',
     tech: 'Next.js · Solidity · Web3',
     stack: ['Next.js', 'Solidity', 'Web3.js', 'IPFS', 'Ethereum'],
     achieved: 'Built a curated NFT gallery platform with 50+ artists onboarded and $100K+ in total sales volume.',
@@ -77,6 +82,7 @@ export const projects = [
   {
     id: 6,
     title: 'SkillSync Career Platform',
+    mainImage: 'https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=400&h=400&fit=crop',
     tech: 'Vue · Express · MongoDB',
     stack: ['Vue.js', 'Express', 'MongoDB', 'JWT', 'Docker'],
     achieved: 'Connected 1,000+ mentors with mentees through an intelligent matching algorithm for career development.',
@@ -92,6 +98,7 @@ export const projects = [
   {
     id: 7,
     title: 'DataFlow ETL Pipeline',
+    mainImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=400&h=400&fit=crop',
     tech: 'Python · Airflow · Snowflake',
     stack: ['Python', 'Apache Airflow', 'Snowflake', 'dbt', 'Kafka'],
     achieved: 'Processed 10TB+ of data daily with 99.9% reliability for a fintech client using streaming and batch pipelines.',

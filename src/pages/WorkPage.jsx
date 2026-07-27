@@ -130,9 +130,9 @@ const isMobile = window.innerWidth < 1024
       {
         !isMobile   &&    
 
-          <div
+        <div
           ref={stageRef}
-          className="lg:grid relative w-full h-[100vh] grid-cols-2 grid-rows-2 rounded-[var(--radius-panel)] overflow-hidden"
+          className="hidden lg:grid relative w-full h-[100vh] grid-cols-3 grid-rows-1 rounded-[var(--radius-panel)] overflow-hidden"
         >
           <div className="absolute inset-0 flex items-center justify-center z-0">
             <LaptopScene ref={laptopRef} />
@@ -143,33 +143,25 @@ const isMobile = window.innerWidth < 1024
                   innerRef={(el) => (bounceRefs.current[i] = el)}
                   onClick={() => setSelectedProject(project)}
                   title={project.title}
+                  image={project.mainImage}
                 />
               ))}
           </div>
 
-          <div
-            ref={frontRef}
-            className="relative z-10 flex items-center justify-center border-r border-b border-[var(--color-border)] border-r-primary border-b-primary bg-[var(--color-surface)]"
-          >
-            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
+          <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] border-r-primary bg-[var(--color-surface)]">
+            <h1 ref={frontTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
               Front‑End
             </h1>
           </div>
 
-          <div
-            ref={backRef}
-            className="relative z-10 flex items-center justify-center border-b border-[var(--color-border)] bg-[var(--color-surface)] border-l-primary border-b-primary"
-          >
-            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
+          <div ref={backRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] bg-[var(--color-surface)]">
+            <h1 ref={backTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
               Back‑End
             </h1>
           </div>
 
-          <div
-            ref={fullRef}
-            className="relative z-10 col-span-2 flex items-center justify-center bg-[var(--color-surface)]"
-          >
-            <h1 className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)] border-t-primary">
+          <div ref={fullRef} className="relative z-10 flex items-center justify-center bg-[var(--color-surface)]">
+            <h1 ref={fullTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)]">
               Full‑Stack
             </h1>
           </div>
@@ -188,6 +180,7 @@ const isMobile = window.innerWidth < 1024
               variant="grid"
               onClick={() => setSelectedProject(project)}
               title={project.title}
+              image={project.mainImage}
             />
           ))}
         </div>
