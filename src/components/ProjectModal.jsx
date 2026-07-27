@@ -3,16 +3,25 @@ import gsap from 'gsap'
 import ProjectCarousel from './ProjectCarousel'
 import { ExternalLink } from 'lucide-react'
 import { FaGithub as Github} from 'react-icons/fa'
+import ScrollTrigger from 'gsap/ScrollTrigger'
+import { X } from 'lucide-react'
 
 export default function ProjectModal({ project, onClose }) {
   const modalRef = useRef()
   const [showContent, setShowContent] = useState(false)
   const [visibleProject, setVisibleProject] = useState(null)
-
+  const scrollPosRef = useRef(0)
   // roll in
   useEffect(() => {
     if (project) {
+      // capture exactly where we are BEFORE touching scroll/lenis at all
+      scrollPosRef.current = window.__lenis?.scroll ?? window.scrollY
+
+      // lock scroll without collapsing document height (no position:fixed —
+      // that zeroes out documentElement.scrollHeight and breaks anything
+      // computing scroll progress off it)
       window.__lenis?.stop()
+      document.body.style.overflow = 'hidden'
 
       setVisibleProject(project)
       setShowContent(false)
@@ -32,7 +41,10 @@ export default function ProjectModal({ project, onClose }) {
 
     // fallback-if  component unmounts while a project is selected
     return () => {
-      if (project) window.__lenis?.start()
+      if (project) {
+        document.body.style.overflow = ''
+        window.__lenis?.start()
+      }
     }
   }, [project])
 
@@ -46,7 +58,10 @@ export default function ProjectModal({ project, onClose }) {
       onComplete: () => {
         setVisibleProject(null)
         onClose()
+        document.body.style.overflow = ''
         window.__lenis?.start()
+        // no need to scrollTo — we never moved the scroll position,
+        // we only blocked input while the modal was open
       },
     })
   }
@@ -54,17 +69,22 @@ export default function ProjectModal({ project, onClose }) {
   if (!visibleProject) return null
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/70"
-      onClick={handleClose}
-    >
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={handleClose}>
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="w-[85%] max-w-2xl h-[70vh] bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden p-8"
+        className="relative w-[92%] sm:w-[85%] h-[88vh] sm:h-[70vh] max-w-2xl bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden"
       >
+         {/* fixed header */}
+        <button
+          onClick={handleClose}
+          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors"
+        >
+          <X size={18} />
+        </button>
+
         {showContent && (
-          <div className="h-full overflow-y-auto">
+          <div className="h-full overflow-y-auto p-6 sm:p-8 pt-14">
             <button
               onClick={handleClose}
               className="text-white/50 hover:text-white mb-4 transition-colors"
