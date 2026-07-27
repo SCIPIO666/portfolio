@@ -64,11 +64,11 @@ export default function ProjectModal({ project, onClose }) {
   if (!visibleProject) return null
 
   return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={handleClose}>
+  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 rounded " onClick={handleClose}>
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-[92%] sm:w-[85%] h-[88vh] sm:h-[70vh] max-w-2xl bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden"
+        className="relative w-[92%] sm:w-[85%] h-[88vh]  bg-[var(--color-surface)] border border-[var(--color-border)] overflow-scroll"
       >
          {/* fixed header */}
         <button
