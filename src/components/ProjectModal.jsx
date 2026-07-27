@@ -10,16 +10,13 @@ export default function ProjectModal({ project, onClose }) {
   const modalRef = useRef()
   const [showContent, setShowContent] = useState(false)
   const [visibleProject, setVisibleProject] = useState(null)
-  const scrollPosRef = useRef(0)
+  // const scrollPosRef = useRef(0)
   // roll in
   useEffect(() => {
     if (project) {
-      // capture exactly where we are BEFORE touching scroll/lenis at all
-      scrollPosRef.current = window.__lenis?.scroll ?? window.scrollY
+      // capture exactly where we are 
+     // scrollPosRef.current = window.__lenis?.scroll ?? window.scrollY
 
-      // lock scroll without collapsing document height (no position:fixed —
-      // that zeroes out documentElement.scrollHeight and breaks anything
-      // computing scroll progress off it)
       window.__lenis?.stop()
       document.body.style.overflow = 'hidden'
 
@@ -60,8 +57,6 @@ export default function ProjectModal({ project, onClose }) {
         onClose()
         document.body.style.overflow = ''
         window.__lenis?.start()
-        // no need to scrollTo — we never moved the scroll position,
-        // we only blocked input while the modal was open
       },
     })
   }
@@ -78,7 +73,7 @@ export default function ProjectModal({ project, onClose }) {
          {/* fixed header */}
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors"
+          className="absolute mt-50 top-3 right-3 z-10 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors"
         >
           <X size={18} />
         </button>

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useRef, useState, useEffect } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -27,6 +27,7 @@ export default function WorkPage() {
   const frontTextRef = useRef(null)
   const backTextRef = useRef(null)
   const fullTextRef = useRef(null)
+  const timelineRef = useRef(null)
   const [selectedProject, setSelectedProject] = useState(null)
   const isMobile = window.innerWidth < 1024
 
@@ -38,6 +39,30 @@ export default function WorkPage() {
     { x: 0, y: 180 },
     { x: 260, y: 140 },
   ]
+
+  useEffect(() => {
+    const handleReplay = () => {
+      if (timelineRef.current) {
+        timelineRef.current.restart()
+      }
+      
+      const targetScroll = document.documentElement.scrollHeight * 0.83
+      
+      if (window.__lenis) {
+        window.__lenis.scrollTo(targetScroll, { immediate: true })
+      } else {
+        window.scrollTo(0, targetScroll)
+      }
+      
+      setTimeout(() => {
+        ScrollTrigger.refresh()
+        ScrollTrigger.getAll().forEach(st => st.update())
+      }, 100)
+    }
+
+    window.addEventListener('work-modal-closed', handleReplay)
+    return () => window.removeEventListener('work-modal-closed', handleReplay)
+  }, [])
 
   useSectionReveal(sectionRef, {
     from: { opacity: 0, y: 60 },
@@ -59,7 +84,6 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            // stroke -> fill reveal, plays once when the section enters view
             gsap.to([frontTextRef.current, backTextRef.current, fullTextRef.current], {
               clipPath: 'inset(0% 0% 0% 0%)',
               duration: 1.2,
@@ -71,7 +95,6 @@ export default function WorkPage() {
               },
             })
 
-            // split into individual characters for the later exit animation
             const frontSplit = new SplitType(frontTextRef.current, { types: 'chars' })
             const backSplit = new SplitType(backTextRef.current, { types: 'chars' })
             const fullSplit = new SplitType(fullTextRef.current, { types: 'chars' })
@@ -104,6 +127,8 @@ export default function WorkPage() {
                 },
               },
             })
+
+            timelineRef.current = tl
 
             tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
               .to(frontSplit.chars, {
@@ -147,6 +172,7 @@ export default function WorkPage() {
               frontSplit.revert()
               backSplit.revert()
               fullSplit.revert()
+              timelineRef.current = null
             }
           } else {
             gsap.from(mobileCardRefs.current, {
@@ -162,6 +188,7 @@ export default function WorkPage() {
 
       return () => {
         bounceTweenRef.current?.kill()
+        timelineRef.current = null
       }
     },
     { scope: stageRef }
@@ -255,7 +282,7 @@ export default function WorkPage() {
       )}
 
       {isMobile && (
-        <div className="mt-8 grid grid-cols-2 gap-4 place-items-center px-4">
+        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
@@ -269,7 +296,13 @@ export default function WorkPage() {
         </div>
       )}
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      <ProjectModal 
+        project={selectedProject} 
+        onClose={() => {
+          setSelectedProject(null)
+          window.dispatchEvent(new Event("work-modal-closed"))
+        }} 
+      />
     </section>
   )
 }
