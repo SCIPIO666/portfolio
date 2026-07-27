@@ -59,11 +59,23 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            // Split text into individual characters
+            // stroke -> fill reveal, plays once when the section enters view
+            gsap.to([frontTextRef.current, backTextRef.current, fullTextRef.current], {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              duration: 1.2,
+              ease: 'power3.out',
+              stagger: 0.15,
+              scrollTrigger: {
+                trigger: sectionRef.current,
+                start: 'top 80%',
+              },
+            })
+
+            // split into individual characters for the later exit animation
             const frontSplit = new SplitType(frontTextRef.current, { types: 'chars' })
             const backSplit = new SplitType(backTextRef.current, { types: 'chars' })
             const fullSplit = new SplitType(fullTextRef.current, { types: 'chars' })
-            
+
             const tl = gsap.timeline({
               scrollTrigger: {
                 trigger: sectionRef.current,
@@ -93,30 +105,29 @@ export default function WorkPage() {
               },
             })
 
-            // Panel slide-out with synchronized letter animations
             tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
-              .to(frontSplit.chars, { 
-                xPercent: -80, 
-                opacity: 0, 
-                filter: 'blur(6px)', 
-                stagger: 0.02, 
-                ease: 'none' 
+              .to(frontSplit.chars, {
+                xPercent: -80,
+                opacity: 0,
+                filter: 'blur(6px)',
+                stagger: 0.02,
+                ease: 'none',
               }, '<')
               .to(backRef.current, { xPercent: 100, opacity: 0, ease: 'none' }, '<')
-              .to(backSplit.chars, { 
-                xPercent: 80, 
-                opacity: 0, 
-                filter: 'blur(6px)', 
-                stagger: 0.02, 
-                ease: 'none' 
+              .to(backSplit.chars, {
+                xPercent: 80,
+                opacity: 0,
+                filter: 'blur(6px)',
+                stagger: 0.02,
+                ease: 'none',
               }, '<')
               .to(fullRef.current, { yPercent: 100, opacity: 0, ease: 'none' }, '<')
-              .to(fullSplit.chars, { 
-                yPercent: 60, 
-                opacity: 0, 
-                filter: 'blur(6px)', 
-                stagger: 0.02, 
-                ease: 'none' 
+              .to(fullSplit.chars, {
+                yPercent: 60,
+                opacity: 0,
+                filter: 'blur(6px)',
+                stagger: 0.02,
+                ease: 'none',
               }, '<')
               .to({}, {
                 duration: 1,
@@ -132,14 +143,12 @@ export default function WorkPage() {
                 ease: 'back.out(1.4)',
               })
 
-            // Cleanup function to revert SplitType instances
             return () => {
               frontSplit.revert()
               backSplit.revert()
               fullSplit.revert()
             }
           } else {
-            // Mobile — simple reveal, cards only, no panels/pin/laptop involved
             gsap.from(mobileCardRefs.current, {
               opacity: 0,
               y: 40,
@@ -158,11 +167,15 @@ export default function WorkPage() {
     { scope: stageRef }
   )
 
+  const headingStrokeStyle = {
+    WebkitTextStroke: '1.5px var(--color-ink)',
+    color: 'transparent',
+  }
+
   return (
     <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
       <PageHeader text="Projects I have Worked On" number="03." />
 
-      {/* Desktop — full animation with 3D */}
       {!isMobile && (
         <div
           ref={stageRef}
@@ -183,26 +196,64 @@ export default function WorkPage() {
           </div>
 
           <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] bg-[var(--color-surface)]">
-            <h1 ref={frontTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
-              Front‑End
-            </h1>
+            <div className="relative">
+              <h1
+                aria-hidden="true"
+                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)]"
+                style={headingStrokeStyle}
+              >
+                Front‑End
+              </h1>
+              <h1
+                ref={frontTextRef}
+                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-ink)] leading-[var(--leading-tight)]"
+                style={{ clipPath: 'inset(0 100% 0 0)' }}
+              >
+                Front‑End
+              </h1>
+            </div>
           </div>
 
           <div ref={backRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] bg-[var(--color-surface)]">
-            <h1 ref={backTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-ink)] leading-[var(--leading-tight)]">
-              Back‑End
-            </h1>
+            <div className="relative">
+              <h1
+                aria-hidden="true"
+                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)]"
+                style={headingStrokeStyle}
+              >
+                Back‑End
+              </h1>
+              <h1
+                ref={backTextRef}
+                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-ink)] leading-[var(--leading-tight)]"
+                style={{ clipPath: 'inset(0 100% 0 0)' }}
+              >
+                Back‑End
+              </h1>
+            </div>
           </div>
 
           <div ref={fullRef} className="relative z-10 flex items-center justify-center bg-[var(--color-surface)]">
-            <h1 ref={fullTextRef} className="font-[var(--font-display)] text-[var(--text-hero)] text-[var(--color-primary)] leading-[var(--leading-tight)]">
-              Full‑Stack
-            </h1>
+            <div className="relative">
+              <h1
+                aria-hidden="true"
+                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)] "
+                style={{ WebkitTextStroke: '1.5px var(--color-primary)', color: 'transparent' }}
+              >
+                Full‑Stack
+              </h1>
+              <h1
+                ref={fullTextRef}
+                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-primary)] leading-[var(--leading-tight)]"
+                style={{ clipPath: 'inset(0 100% 0 0)' }}
+              >
+                Full‑Stack
+              </h1>
+            </div>
           </div>
         </div>
       )}
 
-      {/* Mobile — grid, no 3D */}
       {isMobile && (
         <div className="mt-8 grid grid-cols-2 gap-4 place-items-center px-4">
           {projects.map((project, i) => (

@@ -14,7 +14,7 @@ const ProjectCard = forwardRef(function ProjectCard(
       className={
         isGrid
           ? 'relative w-full flex flex-col items-center gap-2 cursor-pointer'
-          : 'group absolute z-20 opacity-0 w-[90px] h-[90px] cursor-pointer'
+          : 'group absolute z-20 opacity-0 w-[100px] h-[100px] cursor-pointer'
       }
     >
       <div
