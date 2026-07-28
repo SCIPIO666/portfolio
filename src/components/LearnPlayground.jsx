@@ -33,38 +33,60 @@ export default function LearnPlayground() {
 
     gsap.to(panel1Ref.current,{
             scrollTrigger: {
-                trigger: "#a",
-                toggleActions: "restart pause reverse none "
+                trigger: section1Ref.current,
+                start: 'top 80%',
+                end: 'center center',
+                scrub: true,
+                pin: true ,
+                pinSpacing: false,
+                toggleActions: "restart pause reverse pause "
             },
             x: 400,
+            background: 'red',
+            yoyo: true,
+            ease: 'power2.out',
              rotation: 360,
-            duration: 4,
+            duration: 1,
             
             
 
      }
     )
-    gsap.from(panel2Ref.current,{
+    gsap.to(panel2Ref.current,{
             scrollTrigger: {
-                trigger: "#b",
-                toggleActions: 'restart pause reverse none '
+                trigger: section1Ref.current,
+                start: 'top 80%',
+                end: 'bottom top',
+                scrub: true,
+                markers: true,
+                                pin: true ,
+                                pinSpacing: false,
+                                toggleActions: 'play pause pause reset'
+    
             },
             x: 400,
+            opacity: 0,
              rotation: 360,
-            duration: 4,
+            duration: 1,
             
 
      }
     )
     gsap.to(panel3Ref.current,{
             scrollTrigger: {
-                trigger: "#c",
-                toggleActions: 'restart pause reverse none '
+                trigger: section1Ref.current,
+                start: 'top 80%',
+                end: 'bottom top',
+                scrub: true,
+                                pin: true ,
+                                pinSpacing: false,
+                toggleActions: 'restart pause reverse pause '
             },
             x: 400,
             y: -100,
+            scale: 2,
              rotation: 360,
-            duration: 4,
+            duration: 1,
             
 
      }
