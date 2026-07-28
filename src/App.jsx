@@ -23,7 +23,7 @@ function App() {
 
     
       <SinglePage/>
-            <LearnPlayground/>
+            {/* <LearnPlayground/> */}
     </>
   )
 
