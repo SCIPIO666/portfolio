@@ -1,4 +1,5 @@
-import { useRef } from 'react'
+
+import { useState, useEffect , useRef} from 'react';
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -30,13 +31,51 @@ export default function LearnPlayground() {
   // SECTION 1: Basic Scroll-Triggered Timeline
   useGSAP(() => {
 
+    gsap.to(panel1Ref.current,{
+            scrollTrigger: {
+                trigger: "#a",
+                toggleActions: "restart pause reverse none "
+            },
+            x: 400,
+             rotation: 360,
+            duration: 4,
+            
+            
+
+     }
+    )
+    gsap.from(panel2Ref.current,{
+            scrollTrigger: {
+                trigger: "#b",
+                toggleActions: 'restart pause reverse none '
+            },
+            x: 400,
+             rotation: 360,
+            duration: 4,
+            
+
+     }
+    )
+    gsap.to(panel3Ref.current,{
+            scrollTrigger: {
+                trigger: "#c",
+                toggleActions: 'restart pause reverse none '
+            },
+            x: 400,
+            y: -100,
+             rotation: 360,
+            duration: 4,
+            
+
+     }
+    )
     
   }, { scope: section1Ref })
   
   // SECTION 2: Scroll + Modal 
   
   useGSAP(() => {
-    // Your code here
+
   }, { scope: section2Ref })
   
   // SECTION 3: Advanced Timeline Control
@@ -48,8 +87,11 @@ export default function LearnPlayground() {
   return (
     <div className="min-h-screen">
       {/* Section 1 */}
-      <section ref={section1Ref} className="h-screen">
+      <section ref={section1Ref} className="min-h-screen flex flex-col gap-3">
         <h2>Section 1: Basic Scroll Timeline</h2>
+        <div id="a" ref={panel1Ref} className='w-[100px] h-[100px] rounded-full bg-white text-accent'>panel 1</div>
+        <div id="b" ref={panel2Ref} className='w-[100px] h-[100px] rounded-full bg-white text-accent'>panel 2</div>
+        <div id="c" ref={panel3Ref} className='w-[100px] h-[100px] rounded-full bg-white text-accent'>panel 3</div>
         {/* 3 panels */}
       </section>
       

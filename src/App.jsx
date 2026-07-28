@@ -3,6 +3,7 @@ import './App.css';
 import DevScipioAnimation from './components/DevScipioAnimation';
 import SinglePage from './pages/SinglePage';
 import Navbar from './components/Navbar';
+import LearnPlayground from './components/LearnPlayground'
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -20,7 +21,9 @@ function App() {
     <>
     <Navbar/>
 
+    
       <SinglePage/>
+            <LearnPlayground/>
     </>
   )
 
