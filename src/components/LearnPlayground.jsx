@@ -39,7 +39,7 @@ export default function LearnPlayground() {
         scrub: 1,
         pin: true,
         pinSpacing: true,
-        markers: true,
+        markers: true,//debugging
         toggleActions: 'play pause resume reset',
         onUpdate: (self) => {
           console.log('Progress:', self.progress)
@@ -49,7 +49,7 @@ export default function LearnPlayground() {
       }
     })
 
-    // Animate panels sequentially
+    // Animating panels in a sequence
     tl.fromTo(panel1Ref.current, 
       { x: -200, opacity: 0, rotation: 0 },
       { x: 0, opacity: 1, rotation: 360, duration: 1, ease: 'power2.out' }
@@ -62,10 +62,10 @@ export default function LearnPlayground() {
     .fromTo(panel3Ref.current,
       { y: 100, opacity: 0, scale: 0.8 },
       { y: 0, opacity: 1, scale: 1, duration: 1, ease: 'power2.out' },
-      '-=0.5'
+      '-=0.5' //Starts 0.5s before previous animation ends
     )
 
-    // Store timeline ref for later use
+    // Storing timeline ref for later use
     timelineRef.current = tl
 
     return () => {
@@ -73,7 +73,7 @@ export default function LearnPlayground() {
     }
   }, { scope: section1Ref })
   
-  // SECTION 2: Scroll + Modal (The Bug Isolated)
+  // SECTION 2: Scroll + Modal 
   useGSAP(() => {
     // Animate cards on scroll
     gsap.fromTo(cardRefs.current,
