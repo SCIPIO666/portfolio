@@ -10,7 +10,7 @@ import ProjectModal from '../components/ProjectModal'
 import ProjectCard from '../components/ProjectCard'
 
 gsap.registerPlugin(ScrollTrigger)
-
+ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
 export default function WorkPage() {
   const sectionRef = useRef(null)
   const stageRef = useRef(null)

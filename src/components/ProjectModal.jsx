@@ -13,37 +13,39 @@ export default function ProjectModal({ project, onClose }) {
   // const scrollPosRef = useRef(0)
   // roll in
   useEffect(() => {
-    if (project) {
-      // capture exactly where we are 
-     // scrollPosRef.current = window.__lenis?.scroll ?? window.scrollY
 
-      window.__lenis?.stop()
-      document.body.style.overflow = 'hidden'
-
-      setVisibleProject(project)
-      setShowContent(false)
-
-      gsap.fromTo(
-        modalRef.current,
-        { xPercent: 100, opacity: 0 },
-        {
-          xPercent: 0,
-          opacity: 1,
-          duration: 0.6,
-          ease: 'power3.out',
-          onComplete: () => setShowContent(true),
-        }
-      )
-    }
-
-    // fallback-if  component unmounts while a project is selected
-    return () => {
-      if (project) {
-        document.body.style.overflow = ''
-        window.__lenis?.start()
-      }
-    }
-  }, [project])
+ if (!project) return
+ 
+     window.__lenis?.stop()
+ 
+     // block scroll input directly — never touches CSS/layout,
+     // so the scrollbar never appears/disappears, so no resize event fires,
+     // so ScrollTrigger never auto-refreshes mid-lock
+     const preventScroll = (e) => e.preventDefault()
+     window.addEventListener('wheel', preventScroll, { passive: false })
+     window.addEventListener('touchmove', preventScroll, { passive: false })
+ 
+     setVisibleProject(project)
+     setShowContent(false)
+ 
+     gsap.fromTo(
+       modalRef.current,
+       { xPercent: 100, opacity: 0 },
+       {
+         xPercent: 0,
+         opacity: 1,
+         duration: 0.6,
+         ease: 'power3.out',
+         onComplete: () => setShowContent(true),
+       }
+     )
+ 
+     return () => {
+       window.removeEventListener('wheel', preventScroll)
+       window.removeEventListener('touchmove', preventScroll)
+       window.__lenis?.start()
+     }
+   }, [project])
 
   const handleClose = () => {
     setShowContent(false)
@@ -55,8 +57,6 @@ export default function ProjectModal({ project, onClose }) {
       onComplete: () => {
         setVisibleProject(null)
         onClose()
-        document.body.style.overflow = ''
-        window.__lenis?.start()
       },
     })
   }
@@ -64,11 +64,11 @@ export default function ProjectModal({ project, onClose }) {
   if (!visibleProject) return null
 
   return (
-  <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 rounded " onClick={handleClose}>
+  <div className="fixed h-[70vh] lg:h-[85h] w-[80vw] inset-0 z-50 flex items-center justify-center bg-black/70 mt-0" onClick={handleClose}>
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-[92%] sm:w-[85%] h-[88vh]  bg-[var(--color-surface)] border border-[var(--color-border)] overflow-scroll"
+        className="relative w-[92%] sm:w-[85%] h-[88vh]  bg-[var(--color-surface)] border border-[var(--color-border)] rounded-xl p-8 max-w-[80vw] w-full"
       >
          {/* fixed header */}
         <button
@@ -79,7 +79,7 @@ export default function ProjectModal({ project, onClose }) {
         </button>
 
         {showContent && (
-          <div className="h-full overflow-y-auto p-6 sm:p-8 pt-14">
+          <div className="h-[80vh] overflow-y-auto p-6 sm:p-8 pt-14">
             <button
               onClick={handleClose}
               className="text-white/50 hover:text-white mb-4 transition-colors"

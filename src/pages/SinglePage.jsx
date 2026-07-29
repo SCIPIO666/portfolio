@@ -23,6 +23,7 @@ export default function SinglePage() {
         <WorkPage />
         <ContactPage />
         <Footer />
+        
       </main>
     </div>
   )
