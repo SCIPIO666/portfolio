@@ -28,7 +28,7 @@ export default function WorkPage() {
   const BACK_LETTERS = 'BACKEND'.split('')
   const topPanelRefs = useRef([])
   const bottomPanelRefs = useRef([])
-  const letterTextRefs = useRef([]) // was missing entirely — this was the crash
+  const letterTextRefs = useRef([])
 
   const cardOffsets = [
     { x: -260, y: -140 },
@@ -83,27 +83,15 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            // stroke -> fill reveal, per letter, plays once on entering the section
-            gsap.to(letterTextRefs.current, {
-              clipPath: 'inset(0% 0% 0% 0%)',
-              duration: 0.8,
-              ease: 'power3.out',
-              stagger: 0.03,
-              scrollTrigger: {
-                trigger: sectionRef.current,
-                start: 'top 80%',
-              },
-            })
-
             const tl = gsap.timeline({
               scrollTrigger: {
                 trigger: sectionRef.current,
-                start: 'top top',
-                end: '+=100%',
+                start: 'center center',
+                end: '+=150%',
                 scrub: 1,
                 pin: true,
                 onUpdate: () => {
-                  const cardsVisible = tl.progress() > 0.8
+                  const cardsVisible = tl.progress() > 0.85
 
                   if (cardsVisible && !cardsVisibleRef.current) {
                     cardsVisibleRef.current = true
@@ -126,14 +114,22 @@ export default function WorkPage() {
 
             timelineRef.current = tl
 
-            // top row (FRONTEND) exits upward, bottom row (BACKEND) exits downward —
-            // each letter staggers slightly for a ripple instead of one rigid block
-            tl.to(topPanelRefs.current, {
-              yPercent: -120,
-              opacity: 0,
-              stagger: 0.02,
+            // segment 1 — stroke fills in, per letter, scroll-driven
+            tl.to(letterTextRefs.current, {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              stagger: 0.03,
               ease: 'none',
+              duration: 1,
             })
+              // segment 2 — deliberate hold: full words sit fully visible
+              .to({}, { duration: 1 })
+              // segment 3 — break-apart begins
+              .to(topPanelRefs.current, {
+                yPercent: -120,
+                opacity: 0,
+                stagger: 0.02,
+                ease: 'none',
+              })
               .to(bottomPanelRefs.current, {
                 yPercent: 120,
                 opacity: 0,
