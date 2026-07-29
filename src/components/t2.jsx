@@ -10,7 +10,10 @@ import ProjectModal from '../components/ProjectModal'
 import ProjectCard from '../components/ProjectCard'
 
 gsap.registerPlugin(ScrollTrigger)
-ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
+
+const FRONT_LETTERS = 'FRONTEND'.split('')
+const BACK_LETTERS = 'BACKEND'.split('')
+
 export default function WorkPage() {
   const sectionRef = useRef(null)
   const stageRef = useRef(null)
@@ -20,15 +23,15 @@ export default function WorkPage() {
   const bounceTweenRef = useRef(null)
   const cardsVisibleRef = useRef(false)
   const mobileCardRefs = useRef([])
-  const timelineRef = useRef(null)
-  const [selectedProject, setSelectedProject] = useState(null)
-  const isMobile = window.innerWidth < 1024
 
-  const FRONT_LETTERS = 'FRONTEND'.split('')
-  const BACK_LETTERS = 'BACKEND'.split('')
+  // the letter tiles themselves (animated out to reveal the laptop scene)
   const topPanelRefs = useRef([])
   const bottomPanelRefs = useRef([])
+  // the solid-fill text layer inside each tile (stroke -> fill clip reveal)
   const letterTextRefs = useRef([])
+
+  const [selectedProject, setSelectedProject] = useState(null)
+  const isMobile = window.innerWidth < 1024
 
   const cardOffsets = [
     { x: -260, y: -140 },
@@ -59,15 +62,28 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            const tl = gsap.timeline({
+            // stroke -> fill reveal for every letter tile, plays once on
+            // enter, cascading outward from the center letter of each row
+            gsap.to(letterTextRefs.current, {
+              clipPath: 'inset(0% 0% 0% 0%)',
+              duration: 0.8,
+              ease: 'power3.out',
+              stagger: { each: 0.025, from: 'center' },
               scrollTrigger: {
                 trigger: sectionRef.current,
-                start: 'center center',
-                end: '+=150%',
+                start: 'top 80%',
+              },
+            })
+
+            const tl = gsap.timeline({
+              scrollTrigger: {
+                trigger: stageRef.current,
+                start: 'top top',
+                end: '+=180%',
                 scrub: 1,
                 pin: true,
                 onUpdate: () => {
-                  const cardsVisible = tl.progress() > 0.85
+                  const cardsVisible = tl.progress() > 0.8
 
                   if (cardsVisible && !cardsVisibleRef.current) {
                     cardsVisibleRef.current = true
@@ -88,27 +104,30 @@ export default function WorkPage() {
               },
             })
 
-            timelineRef.current = tl
+            // hold — nothing moves for a beat, so scrolling into the pin
+            // just sits on FRONTEND / BACKEND fully revealed before anything
+            // starts flying apart
+            tl.to({}, { duration: 1 })
 
-            tl.to(letterTextRefs.current, {
-              clipPath: 'inset(0% 0% 0% 0%)',
-              stagger: 0.03,
-              ease: 'none',
-              duration: 1,
-            })
-              .to({}, { duration: 1 })
-              .to(topPanelRefs.current, {
-                yPercent: -120,
-                opacity: 0,
-                stagger: 0.02,
-                ease: 'none',
-              })
+            // the "blinds" burst open — top row flies up, bottom row flies
+            // down, each cascading outward from its center tile with a
+            // slight fan-rotation, revealing the laptop underneath
+            tl.to(topPanelRefs.current, {
+              yPercent: -130,
+              rotation: (i) => (i - (FRONT_LETTERS.length - 1) / 2) * 2,
+              opacity: 0,
+              filter: 'blur(8px)',
+              ease: 'power2.in',
+              stagger: { each: 0.035, from: 'center' },
+            }, 'burst')
               .to(bottomPanelRefs.current, {
-                yPercent: 120,
+                yPercent: 130,
+                rotation: (i) => (i - (BACK_LETTERS.length - 1) / 2) * 2,
                 opacity: 0,
-                stagger: 0.02,
-                ease: 'none',
-              }, '<')
+                filter: 'blur(8px)',
+                ease: 'power2.in',
+                stagger: { each: 0.035, from: 'center' },
+              }, 'burst')
               .to({}, {
                 duration: 1,
                 onUpdate: function () {
@@ -122,10 +141,6 @@ export default function WorkPage() {
                 stagger: 0.1,
                 ease: 'back.out(1.4)',
               })
-
-            return () => {
-              timelineRef.current = null
-            }
           } else {
             gsap.from(mobileCardRefs.current, {
               opacity: 0,
@@ -140,7 +155,6 @@ export default function WorkPage() {
 
       return () => {
         bounceTweenRef.current?.kill()
-        timelineRef.current = null
       }
     },
     { scope: stageRef }
@@ -176,7 +190,7 @@ export default function WorkPage() {
       {!isMobile && (
         <div
           ref={stageRef}
-          className="hidden lg:grid relative w-full h-[100vh] grid-cols-3 grid-rows-1 rounded-[var(--radius-panel)] overflow-hidden"
+          className="hidden lg:block relative w-full h-[100vh] rounded-[var(--radius-panel)] overflow-hidden"
         >
           <div className="absolute inset-0 flex items-center justify-center z-0">
             <LaptopScene ref={laptopRef} />
@@ -192,8 +206,7 @@ export default function WorkPage() {
             ))}
           </div>
 
-          {/* pointer-events-none — decorative only*/}
-          <div className="absolute inset-0 z-10 flex flex-col pointer-events-none">
+          <div className="absolute inset-0 z-10 flex flex-col">
             <div className="flex h-1/2 w-full border-b border-[var(--color-border)]">
               {FRONT_LETTERS.map((letter, i) =>
                 renderLetterTile(letter, i, {
@@ -217,7 +230,7 @@ export default function WorkPage() {
       )}
 
       {isMobile && (
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
+        <div className="mt-8 grid grid-cols-2 gap-4 place-items-center px-4">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
