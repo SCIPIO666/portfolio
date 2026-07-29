@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from 'react'
+import React, { useRef, useState } from 'react'
 import gsap from 'gsap'
 import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
@@ -38,30 +38,6 @@ export default function WorkPage() {
     { x: 0, y: 180 },
     { x: 260, y: 140 },
   ]
-
-  useEffect(() => {
-    const handleReplay = () => {
-      if (timelineRef.current) {
-        timelineRef.current.restart()
-      }
-
-      const targetScroll = document.documentElement.scrollHeight * 0.83
-
-      if (window.__lenis) {
-        window.__lenis.scrollTo(targetScroll, { immediate: true })
-      } else {
-        window.scrollTo(0, targetScroll)
-      }
-
-      setTimeout(() => {
-        ScrollTrigger.refresh()
-        ScrollTrigger.getAll().forEach((st) => st.update())
-      }, 100)
-    }
-
-    window.addEventListener('work-modal-closed', handleReplay)
-    return () => window.removeEventListener('work-modal-closed', handleReplay)
-  }, [])
 
   useSectionReveal(sectionRef, {
     from: { opacity: 0, y: 60 },
@@ -114,16 +90,13 @@ export default function WorkPage() {
 
             timelineRef.current = tl
 
-            // segment 1 — stroke fills in, per letter, scroll-driven
             tl.to(letterTextRefs.current, {
               clipPath: 'inset(0% 0% 0% 0%)',
               stagger: 0.03,
               ease: 'none',
               duration: 1,
             })
-              // segment 2 — deliberate hold: full words sit fully visible
               .to({}, { duration: 1 })
-              // segment 3 — break-apart begins
               .to(topPanelRefs.current, {
                 yPercent: -120,
                 opacity: 0,
@@ -219,7 +192,8 @@ export default function WorkPage() {
             ))}
           </div>
 
-          <div className="absolute inset-0 z-10 flex flex-col">
+          {/* pointer-events-none — decorative only*/}
+          <div className="absolute inset-0 z-10 flex flex-col pointer-events-none">
             <div className="flex h-1/2 w-full border-b border-[var(--color-border)]">
               {FRONT_LETTERS.map((letter, i) =>
                 renderLetterTile(letter, i, {
@@ -257,13 +231,7 @@ export default function WorkPage() {
         </div>
       )}
 
-      <ProjectModal
-        project={selectedProject}
-        onClose={() => {
-          setSelectedProject(null)
-          window.dispatchEvent(new Event('work-modal-closed'))
-        }}
-      />
+      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   )
 }
