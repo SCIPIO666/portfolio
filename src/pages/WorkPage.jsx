@@ -8,28 +8,27 @@ import LaptopScene from '../components/LaptopScene'
 import { projects } from '../data/projects'
 import ProjectModal from '../components/ProjectModal'
 import ProjectCard from '../components/ProjectCard'
-import SplitType from 'split-type'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function WorkPage() {
   const sectionRef = useRef(null)
   const stageRef = useRef(null)
-  const frontRef = useRef(null)
-  const backRef = useRef(null)
-  const fullRef = useRef(null)
   const laptopRef = useRef()
   const cardRefs = useRef([])
   const bounceRefs = useRef([])
   const bounceTweenRef = useRef(null)
   const cardsVisibleRef = useRef(false)
   const mobileCardRefs = useRef([])
-  const frontTextRef = useRef(null)
-  const backTextRef = useRef(null)
-  const fullTextRef = useRef(null)
   const timelineRef = useRef(null)
   const [selectedProject, setSelectedProject] = useState(null)
   const isMobile = window.innerWidth < 1024
+
+  const FRONT_LETTERS = 'FRONTEND'.split('')
+  const BACK_LETTERS = 'BACKEND'.split('')
+  const topPanelRefs = useRef([])
+  const bottomPanelRefs = useRef([])
+  const letterTextRefs = useRef([]) // was missing entirely — this was the crash
 
   const cardOffsets = [
     { x: -260, y: -140 },
@@ -45,18 +44,18 @@ export default function WorkPage() {
       if (timelineRef.current) {
         timelineRef.current.restart()
       }
-      
+
       const targetScroll = document.documentElement.scrollHeight * 0.83
-      
+
       if (window.__lenis) {
         window.__lenis.scrollTo(targetScroll, { immediate: true })
       } else {
         window.scrollTo(0, targetScroll)
       }
-      
+
       setTimeout(() => {
         ScrollTrigger.refresh()
-        ScrollTrigger.getAll().forEach(st => st.update())
+        ScrollTrigger.getAll().forEach((st) => st.update())
       }, 100)
     }
 
@@ -84,20 +83,17 @@ export default function WorkPage() {
           const { isDesktop } = context.conditions
 
           if (isDesktop) {
-            gsap.to([frontTextRef.current, backTextRef.current, fullTextRef.current], {
+            // stroke -> fill reveal, per letter, plays once on entering the section
+            gsap.to(letterTextRefs.current, {
               clipPath: 'inset(0% 0% 0% 0%)',
-              duration: 1.2,
+              duration: 0.8,
               ease: 'power3.out',
-              stagger: 0.15,
+              stagger: 0.03,
               scrollTrigger: {
                 trigger: sectionRef.current,
                 start: 'top 80%',
               },
             })
-
-            const frontSplit = new SplitType(frontTextRef.current, { types: 'chars' })
-            const backSplit = new SplitType(backTextRef.current, { types: 'chars' })
-            const fullSplit = new SplitType(fullTextRef.current, { types: 'chars' })
 
             const tl = gsap.timeline({
               scrollTrigger: {
@@ -130,27 +126,17 @@ export default function WorkPage() {
 
             timelineRef.current = tl
 
-            tl.to(frontRef.current, { xPercent: -100, opacity: 0, ease: 'none' })
-              .to(frontSplit.chars, {
-                xPercent: -80,
+            // top row (FRONTEND) exits upward, bottom row (BACKEND) exits downward —
+            // each letter staggers slightly for a ripple instead of one rigid block
+            tl.to(topPanelRefs.current, {
+              yPercent: -120,
+              opacity: 0,
+              stagger: 0.02,
+              ease: 'none',
+            })
+              .to(bottomPanelRefs.current, {
+                yPercent: 120,
                 opacity: 0,
-                filter: 'blur(6px)',
-                stagger: 0.02,
-                ease: 'none',
-              }, '<')
-              .to(backRef.current, { xPercent: 100, opacity: 0, ease: 'none' }, '<')
-              .to(backSplit.chars, {
-                xPercent: 80,
-                opacity: 0,
-                filter: 'blur(6px)',
-                stagger: 0.02,
-                ease: 'none',
-              }, '<')
-              .to(fullRef.current, { yPercent: 100, opacity: 0, ease: 'none' }, '<')
-              .to(fullSplit.chars, {
-                yPercent: 60,
-                opacity: 0,
-                filter: 'blur(6px)',
                 stagger: 0.02,
                 ease: 'none',
               }, '<')
@@ -169,9 +155,6 @@ export default function WorkPage() {
               })
 
             return () => {
-              frontSplit.revert()
-              backSplit.revert()
-              fullSplit.revert()
               timelineRef.current = null
             }
           } else {
@@ -194,10 +177,28 @@ export default function WorkPage() {
     { scope: stageRef }
   )
 
-  const headingStrokeStyle = {
-    WebkitTextStroke: '1.5px var(--color-ink)',
-    color: 'transparent',
-  }
+  const renderLetterTile = (letter, i, { textColorVar, panelRefArray, textIndexOffset }) => (
+    <div
+      key={`${letter}-${i}-${textIndexOffset}`}
+      ref={(el) => (panelRefArray.current[i] = el)}
+      className="relative flex-1 h-full flex items-center justify-center bg-[var(--color-surface)] border-r border-[var(--color-border)] last:border-r-0 overflow-hidden"
+    >
+      <span
+        aria-hidden="true"
+        className="font-[var(--font-display)] text-6xl xl:text-7xl 2xl:text-8xl leading-none select-none"
+        style={{ WebkitTextStroke: `2px var(${textColorVar})`, color: 'transparent' }}
+      >
+        {letter}
+      </span>
+      <span
+        ref={(el) => (letterTextRefs.current[textIndexOffset + i] = el)}
+        className="absolute inset-0 flex items-center justify-center font-[var(--font-display)] text-6xl xl:text-7xl 2xl:text-8xl leading-none select-none"
+        style={{ color: `var(${textColorVar})`, clipPath: 'inset(0 100% 0 0)' }}
+      >
+        {letter}
+      </span>
+    </div>
+  )
 
   return (
     <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
@@ -222,60 +223,24 @@ export default function WorkPage() {
             ))}
           </div>
 
-          <div ref={frontRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] bg-[var(--color-surface)]">
-            <div className="relative">
-              <h1
-                aria-hidden="true"
-                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)]"
-                style={headingStrokeStyle}
-              >
-                Front‑End
-              </h1>
-              <h1
-                ref={frontTextRef}
-                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-ink)] leading-[var(--leading-tight)]"
-                style={{ clipPath: 'inset(0 100% 0 0)' }}
-              >
-                Front‑End
-              </h1>
+          <div className="absolute inset-0 z-10 flex flex-col">
+            <div className="flex h-1/2 w-full border-b border-[var(--color-border)]">
+              {FRONT_LETTERS.map((letter, i) =>
+                renderLetterTile(letter, i, {
+                  textColorVar: '--color-ink',
+                  panelRefArray: topPanelRefs,
+                  textIndexOffset: 0,
+                })
+              )}
             </div>
-          </div>
-
-          <div ref={backRef} className="relative z-10 flex items-center justify-center border-r border-[var(--color-border)] bg-[var(--color-surface)]">
-            <div className="relative">
-              <h1
-                aria-hidden="true"
-                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)]"
-                style={headingStrokeStyle}
-              >
-                Back‑End
-              </h1>
-              <h1
-                ref={backTextRef}
-                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-ink)] leading-[var(--leading-tight)]"
-                style={{ clipPath: 'inset(0 100% 0 0)' }}
-              >
-                Back‑End
-              </h1>
-            </div>
-          </div>
-
-          <div ref={fullRef} className="relative z-10 flex items-center justify-center bg-[var(--color-surface)]">
-            <div className="relative">
-              <h1
-                aria-hidden="true"
-                className="font-[var(--font-display)] text-[var(--text-giant)] leading-[var(--leading-tight)] "
-                style={{ WebkitTextStroke: '1.5px var(--color-primary)', color: 'transparent' }}
-              >
-                Full‑Stack
-              </h1>
-              <h1
-                ref={fullTextRef}
-                className="absolute inset-0 font-[var(--font-display)] text-[var(--text-giant)] text-[var(--color-primary)] leading-[var(--leading-tight)]"
-                style={{ clipPath: 'inset(0 100% 0 0)' }}
-              >
-                Full‑Stack
-              </h1>
+            <div className="flex h-1/2 w-full">
+              {BACK_LETTERS.map((letter, i) =>
+                renderLetterTile(letter, i, {
+                  textColorVar: '--color-primary',
+                  panelRefArray: bottomPanelRefs,
+                  textIndexOffset: FRONT_LETTERS.length,
+                })
+              )}
             </div>
           </div>
         </div>
@@ -296,12 +261,12 @@ export default function WorkPage() {
         </div>
       )}
 
-      <ProjectModal 
-        project={selectedProject} 
+      <ProjectModal
+        project={selectedProject}
         onClose={() => {
           setSelectedProject(null)
-          window.dispatchEvent(new Event("work-modal-closed"))
-        }} 
+          window.dispatchEvent(new Event('work-modal-closed'))
+        }}
       />
     </section>
   )
