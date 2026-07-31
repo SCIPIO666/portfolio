@@ -120,7 +120,6 @@ export default function ProjectModal() {
           border-[var(--color-border)]
           
           lg:rounded-xl
-          overflow-scroll
           flex flex-col lg:flex-row
         "
       >
