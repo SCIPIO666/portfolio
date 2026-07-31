@@ -1,3 +1,20 @@
+  import { 
+    SiReact, 
+    SiTailwindcss, 
+    SiGreensock, 
+    SiHtml5,
+    SiJavascript,
+    SiNodedotjs, 
+    SiExpress, 
+    SiPrisma, 
+    SiPostgresql,
+    SiGit, 
+    SiGithub, 
+    SiVite, 
+    SiFigma,
+    SiSqlite
+  } from 'react-icons/si'
+  
   export const skillGroups = [
     {
       title: "Frontend",

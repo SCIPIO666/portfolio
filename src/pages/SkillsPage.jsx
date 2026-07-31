@@ -18,7 +18,7 @@ import {
   SiSqlite
 } from 'react-icons/si'
 
-import skillGroups from '../data/skills'
+import { skillGroups } from '../data/skills'
 
 export default function SkillsPage() {
   const sectionRef = useRef(null)
@@ -52,7 +52,7 @@ export default function SkillsPage() {
                 <div className='flex-1 h-px bg-gradient-to-r from-white/5 to-transparent' />
               </div>
 
-              {/* Skills grid */}
+              {/* skills */}
               <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6'>
                 {group.skills.map((skill, skillIndex) => {
                   const Icon = skill.icon
