@@ -4,6 +4,7 @@ import Navbar from './Navbar'
  import Header from './Header'
  import SocialLinks from './SocialLinks'
 import EmailLink from './EmailLink'
+import  ProjectModal from '../components/ProjectModal'
 export default function Layout() {
   return (
     <div className="min-h-screen bg-bg text-ink flex flex-col">
@@ -11,6 +12,7 @@ export default function Layout() {
       <Header />
       <SocialLinks />
       <EmailLink />
+        <ProjectModal/>
       <main className="flex-1">
           
         </main>

@@ -2,7 +2,7 @@ import { useState, useRef } from 'react'
 import gsap from 'gsap'
 import { ChevronLeft, ChevronRight, ImageOff } from 'lucide-react'
 
-export default function ProjectCarousel({ images = [] }) {
+export default function ProjectCarousel({ images = [], fill = false }) {
   const [index, setIndex] = useState(0)
   const imgRef = useRef()
 
@@ -21,38 +21,35 @@ export default function ProjectCarousel({ images = [] }) {
   const next = () => goTo((index + 1) % images.length)
   const prev = () => goTo((index - 1 + images.length) % images.length)
 
+  const sizeClass = fill ? 'w-full h-full' : 'w-full h-48 rounded-xl'
+
   if (images.length === 0) {
     return (
-      <div className="w-full h-48 rounded-xl bg-[var(--color-surface-raised)] flex items-center justify-center text-[var(--color-muted)]">
+      <div className={`${sizeClass} bg-[var(--color-surface-raised)] flex items-center justify-center text-[var(--color-muted)]`}>
         <ImageOff size={28} />
       </div>
     )
   }
 
   return (
-    <div className="relative w-full h-48 rounded-xl overflow-hidden bg-[var(--color-surface-raised)]">
-      <img
-        ref={imgRef}
-        src={images[index]}
-        alt=""
-        className="w-full h-full object-cover"
-      />
+    <div className={`relative ${sizeClass} overflow-hidden bg-[var(--color-surface-raised)]`}>
+      <img ref={imgRef} src={images[index]} alt="" className="w-full h-full object-cover" />
 
       {images.length > 1 && (
         <>
           <button
             onClick={prev}
-            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/70"
+            className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1.5 text-white hover:bg-black/70"
           >
-            <ChevronLeft size={16} />
+            <ChevronLeft size={18} />
           </button>
           <button
             onClick={next}
-            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1 text-white hover:bg-black/70"
+            className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 rounded-full p-1.5 text-white hover:bg-black/70"
           >
-            <ChevronRight size={16} />
+            <ChevronRight size={18} />
           </button>
-          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1.5">
+          <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
             {images.map((_, i) => (
               <span
                 key={i}

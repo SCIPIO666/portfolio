@@ -4,6 +4,7 @@ import DevScipioAnimation from './components/DevScipioAnimation';
 import SinglePage from './pages/SinglePage';
 import Navbar from './components/Navbar';
 import LearnPlayground from './components/LearnPlayground'
+import ProjectModal from './components/ProjectModal'
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -23,7 +24,8 @@ function App() {
 
     
       <SinglePage/>
-            <LearnPlayground/>
+      <ProjectModal/>
+            {/* <LearnPlayground/> */}
     </>
   )
 

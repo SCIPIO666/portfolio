@@ -6,10 +6,11 @@ import PageHeader from '../components/PageHeader'
 import { useSectionReveal } from '../components/ScrollEffects'
 import LaptopScene from '../components/LaptopScene'
 import { projects } from '../data/projects'
-import ProjectModal from '../components/ProjectModal'
 import ProjectCard from '../components/ProjectCard'
+import { useModalStore } from '../stores/useModalStore'
 
 gsap.registerPlugin(ScrollTrigger)
+
 ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
 export default function WorkPage() {
   const sectionRef = useRef(null)
@@ -21,7 +22,7 @@ export default function WorkPage() {
   const cardsVisibleRef = useRef(false)
   const mobileCardRefs = useRef([])
   const timelineRef = useRef(null)
-  const [selectedProject, setSelectedProject] = useState(null)
+  const openModal = useModalStore((state) => state.openModal)
   const isMobile = window.innerWidth < 1024
 
   const FRONT_LETTERS = 'FRONTEND'.split('')
@@ -122,6 +123,7 @@ export default function WorkPage() {
                 stagger: 0.1,
                 ease: 'back.out(1.4)',
               })
+              
 
             return () => {
               timelineRef.current = null
@@ -185,14 +187,14 @@ export default function WorkPage() {
                 key={project.id}
                 ref={(el) => (cardRefs.current[i] = el)}
                 innerRef={(el) => (bounceRefs.current[i] = el)}
-                onClick={() => setSelectedProject(project)}
+                onClick={() => openModal(project)}
                 title={project.title}
                 image={project.mainImage}
               />
             ))}
           </div>
 
-          {/* pointer-events-none — decorative only*/}
+          {/* pointer-events-none  — decorative only*/}
           <div className="absolute inset-0 z-10 flex flex-col pointer-events-none">
             <div className="flex h-1/2 w-full border-b border-[var(--color-border)]">
               {FRONT_LETTERS.map((letter, i) =>
@@ -223,7 +225,7 @@ export default function WorkPage() {
               key={project.id}
               ref={(el) => (mobileCardRefs.current[i] = el)}
               variant="grid"
-              onClick={() => setSelectedProject(project)}
+              onClick={() => openModal(project)}
               title={project.title}
               image={project.mainImage}
             />
@@ -231,7 +233,6 @@ export default function WorkPage() {
         </div>
       )}
 
-      <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
     </section>
   )
 }
