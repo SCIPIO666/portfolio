@@ -123,6 +123,7 @@ export default function WorkPage() {
                 stagger: 0.1,
                 ease: 'back.out(1.4)',
               })
+              
 
             return () => {
               timelineRef.current = null
