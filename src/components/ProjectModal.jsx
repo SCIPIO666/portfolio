@@ -99,7 +99,7 @@ export default function ProjectModal() {
 
   return (
     <div 
-      className="fixed inset-y-45 sm:h-95vh md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
+      className="fixed inset-y-45 sm:h-95vh md:inset-0 lg:inset-0 z-50 flex  items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
       onClick={handleClose}
     >
       <div
@@ -196,7 +196,7 @@ export default function ProjectModal() {
                       rel="noopener noreferrer"
                       className="btn-pill border border-[var(--color-border)] text-white flex items-center justify-center gap-2"
                     >
-                      <Github size={14} /> Source
+                      <Github size={14} /> Source Code
                     </a>
                   )}
                 </div>

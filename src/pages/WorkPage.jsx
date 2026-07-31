@@ -194,9 +194,9 @@ export default function WorkPage() {
             ))}
           </div>
 
-          {/* pointer-events-none  — decorative only*/}
+          {/* pointer-events-none */}
           <div className="absolute inset-0 z-10 flex flex-col pointer-events-none">
-            <div className="flex h-1/2 w-full border-b border-[var(--color-border)]">
+            <div className="flex h-1/2 w-full  border-[var(--color-border)]">
               {FRONT_LETTERS.map((letter, i) =>
                 renderLetterTile(letter, i, {
                   textColorVar: '--color-ink',
