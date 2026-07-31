@@ -99,7 +99,7 @@ export default function ProjectModal() {
 
   return (
     <div 
-      className="fixed inset-y-58 mr-8 md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70" 
+      className="fixed inset-y-45 mr-8 md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
       onClick={handleClose}
     >
       <div
