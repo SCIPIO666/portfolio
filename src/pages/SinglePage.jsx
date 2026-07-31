@@ -1,5 +1,5 @@
 import AboutPage from './AboutPage'
-import ExperiencePage from './ExperiencePage'
+import SkillsPage from './SkillsPage'
 import ContactPage from './ContactPage'
 import WorkPage from './WorkPage'
 import Sidebar from '../components/Sidebar'
@@ -19,7 +19,7 @@ export default function SinglePage() {
       <main className="lg:ml-[10%] min-h-screen pt-0">  
         <Hero />
         <AboutPage />
-        <ExperiencePage />
+        <SkillsPage />
         <WorkPage />
         <ContactPage />
         <Footer />

@@ -6,7 +6,7 @@ import { scrollToElement } from '../lib/useSmoothScroll'
 
 const NAV_LINKS = [
   { id: 'about', number: '01.', text: 'About' },
-  { id: 'experience', number: '02.', text: 'Experience' },
+  { id: 'skills', number: '02.', text: 'Skills' },
   { id: 'work', number: '03.', text: 'Work' },
   { id: 'contact', number: '04.', text: 'Contact' },
 ]

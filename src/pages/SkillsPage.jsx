@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import PageHeader from '../components/PageHeader'
 import { useSectionReveal } from '../components/ScrollEffects'
-export default function ExperiencePage() {
+export default function SkillsPage() {
    const sectionRef = useRef(null);
     const contentRef = useRef(null);
     
@@ -21,9 +21,9 @@ export default function ExperiencePage() {
     // });
   return (
 
-    <section ref={sectionRef} id='experience' className='min-h-screen pt-24 md:mt-32 lg:mt-32'>
-        <PageHeader  text='Experience' number='02.'/>
-        <p ref={contentRef}>experience info</p>
+    <section ref={sectionRef} id='skills' className='min-h-screen pt-24 md:mt-32 lg:mt-32'>
+        <PageHeader  text='Technical Skills' number='02.'/>
+        <p ref={contentRef}>skills info</p>
     </section>
   )
 }

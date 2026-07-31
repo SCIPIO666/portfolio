@@ -17,7 +17,7 @@ export default function Hero({ compact = false }) {
   const status = useRef();
   const word = 'DEV SCIPIO· ';
 
-  // Handle font loading and refresh
+  //  font loading and refresh
   useEffect(() => {
     // Refresh ScrollTrigger after fonts load
     const refreshOnFontLoad = () => {
@@ -251,7 +251,7 @@ export default function Hero({ compact = false }) {
                   ref={nameRef}
                   className="text-hero mr-0 font-display font-bold leading-[1.08] text-ink mb-3"
                 >
-                  Esphoney Ondicho Scipio.
+                  Esphoney Ondicho Scipio
               </h1>
         }
         {/* <h1
