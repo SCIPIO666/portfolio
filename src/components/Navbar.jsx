@@ -46,7 +46,7 @@ export default function Navbar() {
         });
       },
       {
-        rootMargin: '-50% 0px -50% 0px', //  section is in the middle
+        rootMargin: '-50% 0px -50% 0px', //   in the middle
         threshold: 0,
       }
     );

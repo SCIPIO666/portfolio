@@ -135,7 +135,9 @@
     color: var(--color-ink);
     font-family: var(--font-sans);
   }
-
+body,html{
+   overflow-x: hidden;
+}
   ::selection {
     background: var(--color-primary);
     color: var(--color-primary-ink);
