@@ -21,7 +21,7 @@ export default function ProjectModal() {
     if (!project) return
 
     if (!wasOpenRef.current) {
-      // genuinely opening from closed — full roll-in
+      // roll-in
       wasOpenRef.current = true
       window.__lenis?.stop()
 
@@ -34,10 +34,19 @@ export default function ProjectModal() {
 
       gsap.fromTo(
         modalRef.current,
-        { xPercent: 100, opacity: 0 },
+        { 
+          xPercent: 100, 
+          opacity: 0,
+          width: 500,
+          height: 500,
+          borderRadius: '50%'
+        },
         {
           xPercent: 0,
           opacity: 1,
+          width: '100%', 
+          height: '100%', 
+          borderRadius: '0px',
           duration: 0.6,
           ease: 'power3.out',
           onComplete: () => setShowContent(true),
@@ -50,8 +59,7 @@ export default function ProjectModal() {
       }
     }
 
-    // already open — a next/prev switch already handled the crossfade,
-    // this just keeps local state in sync with the store
+    // next/prev switch
     setVisibleProject(project)
   }, [project])
 
@@ -90,23 +98,71 @@ export default function ProjectModal() {
   if (!visibleProject) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70" onClick={handleClose}>
+    <div 
+      className="fixed inset-y-58 mr-8 md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70" 
+      onClick={handleClose}
+    >
       <div
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        className="relative w-[95%] max-w-5xl h-[88vh] bg-[var(--color-surface)] border border-[var(--color-border)] overflow-hidden flex flex-col sm:flex-row"
+        className="
+          relative
+          w-[90vw]
+          h-[75vh]
+          
+          lg:w-[92vw]
+          lg:max-w-6xl
+          lg:h-[88dvh]
+
+          
+          bg-[var(--color-surface)]
+          border-x lg:border
+          border-[var(--color-border)]
+          
+          lg:rounded-xl
+          overflow-scroll
+          flex flex-col lg:flex-row
+        "
       >
         <button
           onClick={handleClose}
-          className="absolute top-3 right-3 z-20 w-9 h-9 rounded-full bg-black/40 hover:bg-black/60 flex items-center justify-center text-white transition-colors"
+          className="
+            absolute 
+            top-3 right-3 
+            z-20 
+            w-9 h-9 
+            rounded-full 
+            bg-black/50 hover:bg-black/70 
+            flex items-center justify-center 
+            text-white transition-colors
+            lg:bg-black/40 lg:hover:bg-black/60
+          "
         >
           <X size={18} />
         </button>
 
         {showContent && (
-          <div ref={contentRef} className="flex flex-col sm:flex-row w-full h-full">
-            {/* left column — 25% on desktop, natural height stacked on mobile */}
-            <div className="sm:w-1/4 w-full sm:h-full overflow-y-auto p-6 pt-14 sm:pt-6 flex flex-col">
+          <div ref={contentRef} className="flex flex-col lg:flex-row w-full h-full overflow-hidden">
+            {/* image - first on mobile, right on desktop */}
+            <div className="
+              order-1 lg:order-2 
+              w-full lg:flex-1
+              h-[240px] md:h-[320px] lg:h-full 
+              flex-shrink-0
+            ">
+              <ProjectCarousel images={visibleProject.screenshots} fill />
+            </div>
+
+            {/* details - second on mobile, left on desktop */}
+            <div className="
+              order-2 lg:order-1 
+              w-full lg:w-[340px]
+              flex-1 lg:flex-none
+              lg:h-full 
+              overflow-y-auto
+              p-5 pt-14 lg:p-6 lg:pt-6
+              flex flex-col
+            ">
               <div className="flex-1">
                 <h2 className="text-2xl font-bold text-white mb-1">{visibleProject.title}</h2>
                 <p className="text-white/50 text-xs mb-4">{visibleProject.tech}</p>
@@ -147,7 +203,7 @@ export default function ProjectModal() {
                 </div>
               </div>
 
-              {/* project-to-project navigation, separate from the image carousel */}
+              {/* project navigation */}
               <div className="flex items-center justify-between pt-4 mt-4 border-t border-[var(--color-border)]">
                 <button onClick={goPrev} className="text-white/50 hover:text-white flex items-center gap-1 text-xs">
                   <ChevronLeft size={14} /> Prev
@@ -159,11 +215,6 @@ export default function ProjectModal() {
                   Next <ChevronRight size={14} />
                 </button>
               </div>
-            </div>
-
-            {/* right column — 75%, full height image carousel */}
-            <div className="sm:w-3/4 w-full h-64 sm:h-full">
-              <ProjectCarousel images={visibleProject.screenshots} fill />
             </div>
           </div>
         )}
