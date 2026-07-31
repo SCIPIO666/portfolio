@@ -99,7 +99,7 @@ export default function ProjectModal() {
 
   return (
     <div 
-      className="fixed inset-y-45 mr-8 md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
+      className="fixed inset-y-45 sm:h-95vh md:inset-0 lg:inset-0 z-50 flex items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
       onClick={handleClose}
     >
       <div
@@ -158,11 +158,11 @@ export default function ProjectModal() {
               w-full lg:w-[340px]
               flex-1 lg:flex-none
               lg:h-full 
-              overflow-y-auto
+              overflow-scroll
               p-5 pt-14 lg:p-6 lg:pt-6
               flex flex-col
             ">
-              <div className="flex-1">
+              <div className="flex-1 ">
                 <h2 className="text-2xl font-bold text-white mb-1">{visibleProject.title}</h2>
                 <p className="text-white/50 text-xs mb-4">{visibleProject.tech}</p>
                 <p className="text-white/70 text-sm mb-6">{visibleProject.achieved}</p>
