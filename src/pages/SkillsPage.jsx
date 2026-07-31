@@ -6,6 +6,7 @@ import {
   SiTailwindcss, 
   SiGreensock, 
   SiHtml5,
+  SiJavascript,
   SiNodedotjs, 
   SiExpress, 
   SiPrisma, 
@@ -13,8 +14,11 @@ import {
   SiGit, 
   SiGithub, 
   SiVite, 
-  SiFigma 
+  SiFigma,
+  SiSqlite
 } from 'react-icons/si'
+
+import skillGroups from '../data/skills'
 
 export default function SkillsPage() {
   const sectionRef = useRef(null)
@@ -27,105 +31,13 @@ export default function SkillsPage() {
     scrub: false,
   })
 
-  const skillGroups = [
-    {
-      title: "Frontend",
-      romanNumeral: "I",
-      skills: [
-        {
-          name: "React",
-          icon: SiReact,
-          description: "Component-based UI",
-          glowColor: "hover:text-[#61DAFB]"
-        },
-        {
-          name: "Tailwind CSS",
-          icon: SiTailwindcss,
-          description: "Utility-first styling",
-          glowColor: "hover:text-[#06B6D4]"
-        },
-        {
-          name: "GSAP",
-          icon: SiGreensock,
-          description: "High-performance animations",
-          glowColor: "hover:text-[#88CE02]"
-        },
-        {
-          name: "HTML",
-          icon: SiHtml5,
-          description: "Semantic markup",
-          glowColor: "hover:text-[#E34F26]"
-        },
-      ]
-    },
-    {
-      title: "Backend",
-      romanNumeral: "II",
-      skills: [
-        {
-          name: "Node.js",
-          icon: SiNodedotjs,
-          description: "Server-side JavaScript",
-          glowColor: "hover:text-[#339933]"
-        },
-        {
-          name: "Express",
-          icon: SiExpress,
-          description: "Web application framework",
-          glowColor: "hover:text-[#000000]"
-        },
-        {
-          name: "Prisma",
-          icon: SiPrisma,
-          description: "Type-safe ORM",
-          glowColor: "hover:text-[#2D3748]"
-        },
-        {
-          name: "PostgreSQL",
-          icon: SiPostgresql,
-          description: "Relational database",
-          glowColor: "hover:text-[#4169E1]"
-        },
-      ]
-    },
-    {
-      title: "Tools",
-      romanNumeral: "III",
-      skills: [
-        {
-          name: "Git",
-          icon: SiGit,
-          description: "Version control",
-          glowColor: "hover:text-[#F05032]"
-        },
-        {
-          name: "GitHub",
-          icon: SiGithub,
-          description: "Collaboration platform",
-          glowColor: "hover:text-[#181717]"
-        },
-        {
-          name: "Vite",
-          icon: SiVite,
-          description: "Modern build tool",
-          glowColor: "hover:text-[#646CFF]"
-        },
-        {
-          name: "Figma",
-          icon: SiFigma,
-          description: "Interface design",
-          glowColor: "hover:text-[#F24E1E]"
-        },
-      ]
-    }
-  ]
 
   return (
     <section ref={sectionRef} id='skills' className='min-h-screen pt-24 md:pt-32 lg:pt-32 px-4 md:px-8'>
       <PageHeader text='Technical Skills' number='02.' />
       
       <div ref={contentRef} className='max-w-6xl mx-auto mt-12'>
-        {/* Grid of skill groups */}
+        {/*skill groups */}
         <div className='space-y-16'>
           {skillGroups.map((group, groupIndex) => (
             <div key={groupIndex}>
@@ -141,7 +53,7 @@ export default function SkillsPage() {
               </div>
 
               {/* Skills grid */}
-              <div className='grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6'>
+              <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6'>
                 {group.skills.map((skill, skillIndex) => {
                   const Icon = skill.icon
                   return (
@@ -192,7 +104,7 @@ export default function SkillsPage() {
                         mx-auto 
                         mb-4
                         text-4xl
-                        text-primary
+                        text-white/60
                         transition-all
                         duration-300
                         group-hover:scale-110
@@ -212,7 +124,7 @@ export default function SkillsPage() {
                         text-center 
                         text-sm 
                         font-semibold 
-                        text-primary
+                        text-white/90 
                         mb-1
                         tracking-tight
                       '>
@@ -258,9 +170,10 @@ export default function SkillsPage() {
           ))}
         </div>
 
+        {/* Optional: Subtle footer note */}
         <div className='mt-20 text-center'>
           <p className='text-xs text-white/10 font-mono tracking-widest'>
-            ✦ CONTINUOUSLY EXPANDING MY HORIZONS ✦
+            CONTINUOUSLY EXPANDING MY HORIZONS
           </p>
         </div>
       </div>

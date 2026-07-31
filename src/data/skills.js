@@ -10,6 +10,12 @@
           glowColor: "hover:text-[#61DAFB]"
         },
         {
+          name: "JavaScript",
+          icon: SiJavascript,
+          description: "Dynamic web development",
+          glowColor: "hover:text-[#F7DF1E]"
+        },
+        {
           name: "Tailwind CSS",
           icon: SiTailwindcss,
           description: "Utility-first styling",
@@ -39,12 +45,6 @@
           description: "Server-side JavaScript",
           glowColor: "hover:text-[#339933]"
         },
-                {
-          name: "SQL",
-          icon: SiSQL,
-          description: "data base querying",
-          glowColor: "hover:text-[#339933]"
-        },
         {
           name: "Express",
           icon: SiExpress,
@@ -62,6 +62,12 @@
           icon: SiPostgresql,
           description: "Relational database",
           glowColor: "hover:text-[#4169E1]"
+        },
+        {
+          name: "SQL",
+          icon: SiSqlite,
+          description: "Database querying",
+          glowColor: "hover:text-[#003B57]"
         },
       ]
     },
