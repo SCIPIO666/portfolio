@@ -51,7 +51,7 @@ export default function AboutPage() {
             </p>
 
             <p className='text-base leading-relaxed text-gray-300'>
-              Since then, I've taken on increasingly ambitious projects, including <span className='text-primary-soft font-mono'>a Laboratory Information System, e-commerce applications, custom dashboards, and other full-stack solutions.</span> Every project has reinforced the same lesson—that one attempt to eliminate a manual process turned into <span className='text-primary-soft font-mono'>a lifelong pursuit of building thoughtful software.</span>
+              Since then, I've taken on increasingly ambitious projects, including <span className='text-primary-soft font-mono'>an online learning platform, e-commerce applications, custom dashboards, and other full-stack solutions.</span> Every project has reinforced the same lesson—that one attempt to eliminate a manual process turned into <span className='text-primary-soft font-mono'>a lifelong pursuit of building thoughtful software.</span>
             </p>
 
             <p className='text-lg leading-relaxed font-medium text-primary'>
