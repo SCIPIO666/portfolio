@@ -15,6 +15,7 @@ ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
 export default function WorkPage() {
   const sectionRef = useRef(null)
   const stageRef = useRef(null)
+  const mobileStageRef = useRef(null)
   const laptopRef = useRef()
   const cardRefs = useRef([])
   const bounceRefs = useRef([])
@@ -129,12 +130,18 @@ export default function WorkPage() {
               timelineRef.current = null
             }
           } else {
+            // alternating left/right slide-in
             gsap.from(mobileCardRefs.current, {
               opacity: 0,
-              y: 40,
+              x: (i) => (i % 2 === 0 ? -60 : 60),
               stagger: 0.15,
               duration: 0.6,
               ease: 'power2.out',
+              scrollTrigger: {
+                trigger: mobileStageRef.current,
+                start: 'top 85%',
+                toggleActions: 'play reverse play reverse',
+              },
             })
           }
         }
@@ -219,7 +226,7 @@ export default function WorkPage() {
       )}
 
       {isMobile && (
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
+        <div ref={mobileStageRef} className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
