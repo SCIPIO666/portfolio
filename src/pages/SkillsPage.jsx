@@ -24,7 +24,7 @@ export default function SkillsPage() {
       const cards = gsap.utils.toArray('.skill-card', sectionRef.current)
 
       gsap.from(cards, {
-        opacity: 1,
+        opacity: 0,
         y: 30,
         scale: 0.95,
         duration: 0.5,
@@ -78,8 +78,8 @@ export default function SkillsPage() {
                       "
                       style={{
                         boxShadow: 'inset 0 0 25px rgba(244,196,48,0.05), 0 10px 30px rgba(0,0,0,0.35)',
-                        clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                        WebkitClipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                        clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
+                        WebkitClipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
                         transform: 'scale(1)',
                         transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
                       }}
@@ -90,7 +90,7 @@ export default function SkillsPage() {
                         e.currentTarget.style.transform = 'scale(1) translateY(0px)'
                       }}
                     >
-                      {/* Diamond shape background decoration */}
+                      {/* Parallelogram background decoration */}
                       <div 
                         className="
                           absolute 
@@ -103,8 +103,8 @@ export default function SkillsPage() {
                         "
                         style={{
                           background: 'linear-gradient(135deg, #6366f1, #22d3ee)',
-                          clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                          WebkitClipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                          clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
+                          WebkitClipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
                         }}
                       />
 
@@ -113,7 +113,7 @@ export default function SkillsPage() {
                         {group.romanNumeral}
                       </span>
 
-                      {/* Content wrapper - rotated to keep content upright */}
+                      {/* Content wrapper */}
                       <div className="relative z-10 flex flex-col items-center justify-center p-4 w-full h-full">
                         {/* Icon */}
                         <div className="flex items-center justify-center w-16 h-16 mb-4 text-4xl transition-all duration-300 group-hover:scale-110 group-hover:rotate-[-8deg]">
@@ -132,10 +132,11 @@ export default function SkillsPage() {
                       </div>
 
                       {/* Hover glow overlay */}
-                      <div className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none bg-gradient-to-br from-white/5 to-transparent" 
+                      <div 
+                        className="absolute inset-0 opacity-0 transition-opacity duration-300 group-hover:opacity-100 pointer-events-none bg-gradient-to-br from-white/5 to-transparent"
                         style={{
-                          clipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
-                          WebkitClipPath: 'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                          clipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
+                          WebkitClipPath: 'polygon(25% 0%, 100% 0%, 75% 100%, 0% 100%)',
                         }}
                       />
                     </div>
