@@ -1,23 +1,6 @@
 import React, { useRef } from 'react'
 import PageHeader from '../components/PageHeader'
 import { useSectionReveal } from '../components/ScrollEffects'
-import { 
-  SiReact, 
-  SiTailwindcss, 
-  SiGreensock, 
-  SiHtml5,
-  SiJavascript,
-  SiNodedotjs, 
-  SiExpress, 
-  SiPrisma, 
-  SiPostgresql,
-  SiGit, 
-  SiGithub, 
-  SiVite, 
-  SiFigma,
-  SiSqlite
-} from 'react-icons/si'
-
 import { skillGroups } from '../data/skills'
 
 export default function SkillsPage() {
@@ -31,13 +14,11 @@ export default function SkillsPage() {
     scrub: false,
   })
 
-
   return (
     <section ref={sectionRef} id='skills' className='min-h-screen pt-24 md:pt-32 lg:pt-32 px-4 md:px-8'>
       <PageHeader text='Technical Skills' number='02.' />
       
       <div ref={contentRef} className='max-w-6xl mx-auto mt-12'>
-        {/*skill groups */}
         <div className='space-y-16'>
           {skillGroups.map((group, groupIndex) => (
             <div key={groupIndex}>
@@ -52,8 +33,8 @@ export default function SkillsPage() {
                 <div className='flex-1 h-px bg-gradient-to-r from-white/5 to-transparent' />
               </div>
 
-              {/* skills */}
-              <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6'>
+              {/* Skills grid */}
+              <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6'>
                 {group.skills.map((skill, skillIndex) => {
                   const Icon = skill.icon
                   return (
@@ -94,7 +75,7 @@ export default function SkillsPage() {
                         {group.romanNumeral}
                       </span>
 
-                      {/* Icon */}
+                      {/* Icon with original color */}
                       <div className='
                         flex 
                         items-center 
@@ -104,18 +85,14 @@ export default function SkillsPage() {
                         mx-auto 
                         mb-4
                         text-4xl
-                        text-white/60
                         transition-all
                         duration-300
                         group-hover:scale-110
                         group-hover:rotate-[-8deg]
                       '>
                         <Icon 
-                          className={`
-                            transition-colors 
-                            duration-300 
-                            ${skill.glowColor}
-                          `} 
+                          className='transition-colors duration-300'
+                          style={{ color: skill.color }}
                         />
                       </div>
 
@@ -170,7 +147,7 @@ export default function SkillsPage() {
           ))}
         </div>
 
-        {/* Optional: Subtle footer note */}
+        {/* Footer note */}
         <div className='mt-20 text-center'>
           <p className='text-xs text-white/10 font-mono tracking-widest'>
             CONTINUOUSLY EXPANDING MY HORIZONS
