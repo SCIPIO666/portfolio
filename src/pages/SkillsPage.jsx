@@ -47,6 +47,7 @@ export default function SkillsPage() {
         gsap.from(cards, {
           opacity: 1,
           y: -70,
+          rotateX: 180,
           scale: 0.9,
           duration: 0.7,
           ease: 'back.out(1.4)',
@@ -210,7 +211,7 @@ export default function SkillsPage() {
           <p className="text-xs text-white/50 font-mono tracking-widest">CONTINUOUSLY EXPANDING MY HORIZONS</p>
         </div>
       </div>
-      <CurveDivider variant="peak" flip height={300} />
+      <CurveDivider variant="valley"  height={300} />
     </section>
   )
 }

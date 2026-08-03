@@ -102,12 +102,16 @@ export default function WorkPage() {
               .to(topPanelRefs.current, {
                 yPercent: -120,
                 opacity: 0,
+                rotateY: 180,
+                width: 50,
                 stagger: 0.02,
                 ease: 'none',
               })
               .to(bottomPanelRefs.current, {
                 yPercent: 120,
                 opacity: 0,
+                scale: 1.5,
+                rotateX: 360,
                 stagger: 0.02,
                 ease: 'none',
               }, '<')
@@ -239,7 +243,7 @@ export default function WorkPage() {
           ))}
         </div>
       )}
-      <CurveDivider variant="diagonal" flip height={300} />
+      <CurveDivider variant="valley" flip height={300} />
     </section>
   )
 }
