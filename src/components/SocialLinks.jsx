@@ -1,10 +1,9 @@
-import { FaGithub, FaTwitter, FaFacebook, FaLinkedin } from 'react-icons/fa'
+import { FaGithub, FaTwitter, FaLinkedin } from 'react-icons/fa'
 
 
 const LINKS = [
   { href: 'https://github.com/SCIPIO666', icon: FaGithub, label: 'GitHub' },
   { href: 'https://x.com/scipio_NEO', icon: FaTwitter, label: 'Twitter' },
-  { href: 'https://facebook.com/yourprofile', icon: FaFacebook, label: 'Facebook' },
   { href: 'https://www.linkedin.com/in/esphoney-ondicho-859043331?utm_source=share_via&utm_content=profile&utm_medium=member_android', icon: FaLinkedin, label: 'LinkedIn' },
 ]
 

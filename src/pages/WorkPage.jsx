@@ -8,13 +8,14 @@ import LaptopScene from '../components/LaptopScene'
 import { projects } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
 import { useModalStore } from '../stores/useModalStore'
-
+import CurveDivider from '../components/CurveDivider'
 gsap.registerPlugin(ScrollTrigger)
 
 ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
 export default function WorkPage() {
   const sectionRef = useRef(null)
   const stageRef = useRef(null)
+  const mobileStageRef = useRef(null)
   const laptopRef = useRef()
   const cardRefs = useRef([])
   const bounceRefs = useRef([])
@@ -101,12 +102,16 @@ export default function WorkPage() {
               .to(topPanelRefs.current, {
                 yPercent: -120,
                 opacity: 0,
+                rotateY: 180,
+                width: 50,
                 stagger: 0.02,
                 ease: 'none',
               })
               .to(bottomPanelRefs.current, {
                 yPercent: 120,
                 opacity: 0,
+                scale: 1.5,
+                rotateX: 360,
                 stagger: 0.02,
                 ease: 'none',
               }, '<')
@@ -129,12 +134,18 @@ export default function WorkPage() {
               timelineRef.current = null
             }
           } else {
+            // alternating left/right slide-in
             gsap.from(mobileCardRefs.current, {
               opacity: 0,
-              y: 40,
+              x: (i) => (i % 2 === 0 ? -60 : 60),
               stagger: 0.15,
               duration: 0.6,
               ease: 'power2.out',
+              scrollTrigger: {
+                trigger: mobileStageRef.current,
+                start: 'top 85%',
+                toggleActions: 'play reverse play reverse',
+              },
             })
           }
         }
@@ -172,7 +183,7 @@ export default function WorkPage() {
   )
 
   return (
-    <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
+    <section ref={sectionRef} id="work" className="relative min-h-screen pt-24 md:mt-32 lg:mt-32">
       <PageHeader text="Projects I have Worked On" number="03." />
 
       {!isMobile && (
@@ -219,7 +230,7 @@ export default function WorkPage() {
       )}
 
       {isMobile && (
-        <div className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
+        <div ref={mobileStageRef} className="mt-8 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 place-items-center px-4">
           {projects.map((project, i) => (
             <ProjectCard
               key={project.id}
@@ -232,7 +243,7 @@ export default function WorkPage() {
           ))}
         </div>
       )}
-
+      <CurveDivider variant="valley" flip height={300} />
     </section>
   )
 }
