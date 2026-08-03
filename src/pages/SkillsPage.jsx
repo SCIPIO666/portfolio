@@ -8,9 +8,8 @@ import { skillGroups } from '../data/skills'
 import CurveDivider from '../components/CurveDivider'
 gsap.registerPlugin(ScrollTrigger)
 
-// true on devices with a real mouse (fine pointer + hover capability),
-// false on touch devices — used to skip the hover-driven interaction
-// and render cards permanently in their "opened" end state instead.
+
+// true - real mouse ,false - touch devices 
 function useHasHover() {
   const [hasHover, setHasHover] = useState(true)
 
@@ -47,7 +46,7 @@ export default function SkillsPage() {
         gsap.from(cards, {
           opacity: 1,
           y: -70,
-          rotateX: 180,
+          rotateY: 180,
           scale: 0.9,
           duration: 0.7,
           ease: 'back.out(1.4)',
