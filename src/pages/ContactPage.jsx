@@ -9,7 +9,6 @@ import { Mail, Copy, Check, Send } from 'lucide-react'
 const SOCIAL_LINKS = [
   { href: 'https://github.com/SCIPIO666', icon: FaGithub, label: 'GitHub' },
   { href: 'https://x.com/scipio_NEO', icon: FaTwitter, label: 'Twitter' },
-  // { href: 'https://facebook.com', icon: FaFacebook, label: 'Facebook' },
   {
     href: 'https://www.linkedin.com/in/esphoney-ondicho-859043331?utm_source=share_via&utm_content=profile&utm_medium=member_android',
     icon: FaLinkedin,
@@ -92,8 +91,7 @@ export default function ContactPage() {
             </div>
           </div>
 
-          {/* mobile-only — SocialLinks/EmailLink in the sidebar are lg-only,
-              so this is currently the only place mobile visitors can find these */}
+          {/* mobile-SocialLinks/EmailLink*/}
           <div className="lg:hidden flex items-center gap-5 pt-2 border-t border-border">
             {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
               <a
@@ -110,7 +108,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* right — mailto-backed form */}
+        {/* right — form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="text-xs font-mono text-muted tracking-wide mb-1 block">Name</label>
@@ -148,6 +146,7 @@ export default function ContactPage() {
             />
           </div>
 
+            {/* email sending logic to be added later */}
           <button
             type="submit"
             className="mt-2 flex items-center justify-center gap-2 bg-primary text-primary-ink font-semibold rounded-xl px-5 py-3 hover:brightness-110 transition-all"
@@ -155,9 +154,6 @@ export default function ContactPage() {
             <Send size={16} /> Send message
           </button>
 
-          <p className="text-xs text-muted-soft text-center">
-            Opens your email client with this filled in — nothing is sent from here directly.
-          </p>
         </form>
       </div>
 
