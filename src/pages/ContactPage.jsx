@@ -38,7 +38,7 @@ export default function ContactPage() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // clipboard permission denied or unsupported — the visible email text is the fallback
+      // clipboard permission fails
     }
   }
 
@@ -161,7 +161,7 @@ export default function ContactPage() {
         </form>
       </div>
 
-      <CurveDivider variant="diagonal" flip height={300} />
+      <CurveDivider variant="valley"  height={300} />
     </section>
   )
 }

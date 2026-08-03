@@ -24,7 +24,7 @@ function App() {
 
     
       <SinglePage/>
-      <ProjectModal/>
+
             {/* <LearnPlayground/> */}
     </>
   )
