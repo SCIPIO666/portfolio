@@ -68,8 +68,7 @@ export default function ContactPage() {
             </div>
 
             <p className="text-lg text-ink/80 leading-relaxed mb-6">
-              Have a project in mind, or just want to talk shop? I read every message myself —
-              no forms disappearing into a void.
+              Have a project in mind, or just want to talk shop? Reach out to me today.
             </p>
 
             <div className="flex flex-wrap gap-3">

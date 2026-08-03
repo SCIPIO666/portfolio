@@ -46,7 +46,7 @@ export default function SkillsPage() {
         gsap.from(cards, {
           opacity: 1,
           y: -70,
-          rotateY: 180,
+          rotateY: 360,
           scale: 0.9,
           duration: 0.7,
           ease: 'back.out(1.4)',
