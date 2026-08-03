@@ -3,7 +3,6 @@ import {
   SiTailwindcss,
   SiGreensock,
   SiHtml5,
-  SiCssmodules,
   SiJavascript,
   SiTypescript,
   SiFramer,
@@ -13,19 +12,12 @@ import {
   SiPrisma,
   SiPostgresql,
   SiSqlite,
-  SiPython,
-  SiFastapi,
-  SiSocketdotio,
-  SiAxios,
-  SiZod,
   SiGit,
   SiGithub,
   SiVite,
   SiFigma,
-  SiVercel,
-  SiRender,
 } from 'react-icons/si'
-
+import { FaCss3Alt } from 'react-icons/fa'
 export const skillGroups = [
   {
     title: 'Frontend',
@@ -39,7 +31,7 @@ export const skillGroups = [
       { name: 'Framer Motion', icon: SiFramer, description: 'Declarative React animation', color: '#0055FF' },
       { name: 'Three.js', icon: SiThreedotjs, description: '3D on the web', color: '#ffffff' },
       { name: 'HTML5', icon: SiHtml5, description: 'Semantic markup', color: '#E34F26' },
-      { name: 'CSS3', icon: SiCssmodules, description: 'Modern styling & layouts', color: '#1572B6' },
+      { name: 'CSS3', icon: FaCss3Alt, description: 'Modern styling & layouts', color: '#1572B6' },
     ],
   },
   {
