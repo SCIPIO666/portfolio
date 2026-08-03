@@ -3,7 +3,7 @@ import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
-
+import CurveDivider from "../components/CurveDivider";
 import CallToActionButton from "../components/CallToActionButton";
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -299,6 +299,7 @@ export default function Hero({ compact = false }) {
           <span>Available for freelance work</span>
         </div>
       </div>
+      <CurveDivider variant="diagonal"  height={500} />
     </section>
   );
 }

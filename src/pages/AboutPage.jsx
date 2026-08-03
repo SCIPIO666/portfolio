@@ -4,7 +4,7 @@ import { useGSAP } from '@gsap/react'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import PageHeader from '../components/PageHeader'
 import me from '../../public/me.JPG'
-
+import CurveDivider from '../components/CurveDivider'
 gsap.registerPlugin(ScrollTrigger)
 
 export default function AboutPage() {
@@ -51,7 +51,7 @@ export default function AboutPage() {
     <section
       ref={sectionRef}
       id='about'
-      className='min-h-screen pt-24 md:mt-32 lg:mt-32 px-4 md:px-8 lg:px-16'
+      className='relative min-h-screen pt-24 md:mt-32 lg:mt-32 px-4 md:px-8 lg:px-16'
     >
       <div ref={contentRef} className='flex flex-col lg:flex-row gap-8 lg:gap-12 items-start'>
 
@@ -80,7 +80,7 @@ export default function AboutPage() {
               Since then, I've taken on increasingly ambitious projects, including <span className='text-primary-soft font-mono'>an online learning platform, e-commerce applications, custom dashboards, and other full-stack solutions.</span> Every project has reinforced the same lesson—that one attempt to eliminate a manual process turned into <span className='text-primary-soft font-mono'>a lifelong pursuit of building thoughtful software.</span>
             </p>
 
-            <p className='about-line text-lg leading-relaxed font-medium text-primary'>
+            <p className='about-line text-lg leading-relaxed font-bold md:text-ink lg:text-ink'>
               Turns out, trying to kill one spreadsheet can ignite a lifelong chase for craftsmanship inside a code editor.
             </p>
           </div>
@@ -107,6 +107,7 @@ export default function AboutPage() {
         </div>
 
       </div>
+      <CurveDivider variant="diagonal" flip height={300} />
     </section>
   )
 }

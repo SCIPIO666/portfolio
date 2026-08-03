@@ -8,7 +8,7 @@ import LaptopScene from '../components/LaptopScene'
 import { projects } from '../data/projects'
 import ProjectCard from '../components/ProjectCard'
 import { useModalStore } from '../stores/useModalStore'
-
+import CurveDivider from '../components/CurveDivider'
 gsap.registerPlugin(ScrollTrigger)
 
 ScrollTrigger.config({ autoRefreshEvents: 'DOMContentLoaded,load' })
@@ -179,7 +179,7 @@ export default function WorkPage() {
   )
 
   return (
-    <section ref={sectionRef} id="work" className="min-h-screen pt-24 md:mt-32 lg:mt-32">
+    <section ref={sectionRef} id="work" className="relative min-h-screen pt-24 md:mt-32 lg:mt-32">
       <PageHeader text="Projects I have Worked On" number="03." />
 
       {!isMobile && (
@@ -239,7 +239,7 @@ export default function WorkPage() {
           ))}
         </div>
       )}
-
+      <CurveDivider variant="diagonal" flip height={300} />
     </section>
   )
 }

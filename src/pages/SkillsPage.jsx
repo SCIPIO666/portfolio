@@ -5,7 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import PageHeader from '../components/PageHeader'
 import { useSectionReveal } from '../components/ScrollEffects'
 import { skillGroups } from '../data/skills'
-
+import CurveDivider from '../components/CurveDivider'
 gsap.registerPlugin(ScrollTrigger)
 
 // true on devices with a real mouse (fine pointer + hover capability),
@@ -80,7 +80,7 @@ export default function SkillsPage() {
   }
 
   return (
-    <section ref={sectionRef} id="skills" className="min-h-screen pt-24 md:pt-32 lg:pt-32 px-4 md:px-8">
+    <section ref={sectionRef} id="skills" className="relative min-h-screen pt-24 md:pt-32 lg:pt-32 px-4 md:px-8">
       <PageHeader text="Technical Skills" number="02." />
 
       <div ref={contentRef} className="max-w-6xl mx-auto mt-12">
@@ -210,6 +210,7 @@ export default function SkillsPage() {
           <p className="text-xs text-white/10 font-mono tracking-widest">CONTINUOUSLY EXPANDING MY HORIZONS</p>
         </div>
       </div>
+      <CurveDivider variant="diagonal" flip height={300} />
     </section>
   )
 }

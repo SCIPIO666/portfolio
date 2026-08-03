@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import PageHeader from '../components/PageHeader'
+import CurveDivider from '../components/CurveDivider'
 import { useSectionReveal } from '../components/ScrollEffects'
 export default function ContactPage() {
    const sectionRef = useRef(null);
@@ -20,9 +21,10 @@ export default function ContactPage() {
     //   scrub: false,
     // });
   return (
-    <section ref={sectionRef} id='contact' className='min-h-screen pt-24 md:mt-32 lg:mt-32'>
+    <section ref={sectionRef} id='contact' className='relative min-h-screen pt-24 md:mt-32 lg:mt-32'>
        <PageHeader text='Contact' number='04.'/>
        <p ref={contentRef}>Contact info</p>
+      <CurveDivider variant="diagonal" flip height={300} />
     </section>
 
   )
