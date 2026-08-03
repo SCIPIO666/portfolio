@@ -296,10 +296,11 @@ export default function Hero({ compact = false }) {
             <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-success opacity-75" />
             <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-success" />
           </span>
-          <span>Available for freelance work</span>
+          <span className="text-ink">Available for freelance work</span>
         </div>
       </div>
       <CurveDivider variant="diagonal"  height={500} />
+  
     </section>
   );
 }

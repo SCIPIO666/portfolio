@@ -207,10 +207,10 @@ export default function SkillsPage() {
         </div>
 
         <div className="mt-20 text-center">
-          <p className="text-xs text-white/10 font-mono tracking-widest">CONTINUOUSLY EXPANDING MY HORIZONS</p>
+          <p className="text-xs text-white/50 font-mono tracking-widest">CONTINUOUSLY EXPANDING MY HORIZONS</p>
         </div>
       </div>
-      <CurveDivider variant="diagonal" flip height={300} />
+      <CurveDivider variant="peak" flip height={300} />
     </section>
   )
 }
