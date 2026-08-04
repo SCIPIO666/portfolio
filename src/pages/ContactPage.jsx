@@ -3,7 +3,7 @@ import PageHeader from '../components/PageHeader'
 import CurveDivider from '../components/CurveDivider'
 import CallToActionButton from '../components/CallToActionButton'
 import { useSectionReveal } from '../components/ScrollEffects'
-import { FaGithub, FaTwitter, FaFacebook, FaLinkedin } from 'react-icons/fa'
+import { FaGithub, FaTwitter, FaLinkedin, FaWhatsapp } from 'react-icons/fa'
 import { Mail, Copy, Check, Send } from 'lucide-react'
 
 const SOCIAL_LINKS = [
@@ -14,9 +14,11 @@ const SOCIAL_LINKS = [
     icon: FaLinkedin,
     label: 'LinkedIn',
   },
+  { href: 'https://wa.me/254115529179', icon: FaWhatsapp, label: 'WhatsApp' }, 
 ]
 
 const EMAIL = 'eaphoney@gmail.com'
+const PHONE_NUMBER = '254115529179' 
 
 export default function ContactPage() {
   const sectionRef = useRef(null)
@@ -37,7 +39,7 @@ export default function ContactPage() {
       setCopied(true)
       setTimeout(() => setCopied(false), 2000)
     } catch {
-      // clipboard permission fails
+      // clipboard permission denied 
     }
   }
 
@@ -48,6 +50,11 @@ export default function ContactPage() {
       `${form.message}\n\n—\n${form.name}\n${form.email}`
     )
     window.location.href = `mailto:${EMAIL}?subject=${subject}&body=${body}`
+  }
+
+  const handleWhatsApp = () => {
+    const message = encodeURIComponent("Hi! I checked out your portfolio and i would like to connect.")
+    window.open(`https://wa.me/${PHONE_NUMBER}?text=${message}`, '_blank')
   }
 
   return (
@@ -68,7 +75,8 @@ export default function ContactPage() {
             </div>
 
             <p className="text-lg text-ink/80 leading-relaxed mb-6">
-              Have a project in mind, or just want to talk shop? Reach out to me today.
+              Have a project in mind, or just want to talk shop? I read every message myself —
+              no forms disappearing into a void.
             </p>
 
             <div className="flex flex-wrap gap-3">
@@ -88,9 +96,23 @@ export default function ContactPage() {
                 {copied ? 'Copied' : EMAIL}
               </button>
             </div>
+
+            {/* WhatsApp Button */}
+            <div className="mt-6">
+              <button
+                onClick={handleWhatsApp}
+                className="flex items-center gap-3 px-6 py-3 rounded-xl bg-[#25D366] text-white font-semibold hover:bg-[#128C7E] transition-colors shadow-lg hover:shadow-xl"
+              >
+                <FaWhatsapp size={22} />
+                <span>WhatsApp Me</span>
+              </button>
+              <p className="text-xs text-muted-soft mt-2">
+                Direct message me on WhatsApp — I usually reply within minutes.
+              </p>
+            </div>
           </div>
 
-          {/* mobile-SocialLinks/EmailLink*/}
+          {/* mobile-only — SocialLinks */}
           <div className="lg:hidden flex items-center gap-5 pt-2 border-t border-border">
             {SOCIAL_LINKS.map(({ href, icon: Icon, label }) => (
               <a
@@ -107,7 +129,7 @@ export default function ContactPage() {
           </div>
         </div>
 
-        {/* right — form */}
+        {/* right — mail form */}
         <form onSubmit={handleSubmit} className="flex flex-col gap-4">
           <div>
             <label className="text-xs font-mono text-muted tracking-wide mb-1 block">Name</label>
@@ -145,7 +167,6 @@ export default function ContactPage() {
             />
           </div>
 
-            {/* email sending logic to be added later */}
           <button
             type="submit"
             className="mt-2 flex items-center justify-center gap-2 bg-primary text-primary-ink font-semibold rounded-xl px-5 py-3 hover:brightness-110 transition-all"
@@ -153,6 +174,9 @@ export default function ContactPage() {
             <Send size={16} /> Send message
           </button>
 
+          <p className="text-xs text-muted-soft text-center">
+            Opens your email client with this filled in — nothing is sent from here directly.
+          </p>
         </form>
       </div>
 

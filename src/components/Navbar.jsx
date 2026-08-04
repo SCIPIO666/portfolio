@@ -15,7 +15,7 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
 
-  //  navigation click with smooth scroll
+  // navigation click with smooth scroll
   const handleNavClick = (sectionId, e) => {
     e.preventDefault();
     setOpen(false);
@@ -27,13 +27,13 @@ export default function Navbar() {
       const navbarHeight = navbar ? navbar.offsetHeight : 80;
       
       scrollToElement(sectionId, {
-        offset: -navbarHeight - 20, //  extra padding
+        offset: -navbarHeight - 20, // extra padding
         duration: 1.5,
       });
     }, 100);
   };
 
-  //  active section on scroll
+  // active section on scroll
   useEffect(() => {
     const sections = NAV_LINKS.map(link => document.getElementById(link.id));
     
@@ -46,7 +46,7 @@ export default function Navbar() {
         });
       },
       {
-        rootMargin: '-50% 0px -50% 0px', //   in the middle
+        rootMargin: '-50% 0px -50% 0px', // middle of viewport
         threshold: 0,
       }
     );
@@ -71,7 +71,7 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  // close menu
+  // close menu on outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
       const nav = document.getElementById('mobile-nav');
@@ -84,7 +84,7 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [open]);
 
-  //  mobile menu open
+  // mobile menu open - prevent body scroll
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';
@@ -97,96 +97,96 @@ export default function Navbar() {
   }, [open]);
 
   return (
-    <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
-      <nav className="w-full flex items-center justify-between px-6 py-2">
-        <a 
-          href="#hero" 
-          className="group flex items-center gap-2" 
-          aria-label="Home"
-          onClick={(e) => {
-            e.preventDefault();
-            scrollToElement('hero', {
-              offset: -20,
-              duration: 1.2,
-            });
-          }}
-        >
-          <Emblem
-            size={45}
-            className="transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110"
-          />
-          <span className="font-mono text-sm tracking-widest text-primary">Scipio</span>
-        </a>
-
-        {/* desktop */}
-        <div className="hidden md:flex gap-6 items-center">
-          {NAV_LINKS.map(({ id, number, text }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              onClick={(e) => handleNavClick(id, e)}
-              className={`relative font-mono text-sm transition-colors duration-300 group ${
-                activeSection === id ? 'text-primary' : 'text-muted hover:text-ink'
-              }`}
-            >
-              <span className="text-primary/60 mr-1">{number}</span>
-              {text}
-              {/* Active indicator line */}
-              <span 
-                className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
-                  activeSection === id ? 'w-full' : 'w-0 group-hover:w-full'
-                }`}
-              />
-            </a>
-          ))}
-          <CallToActionButton 
-            text="Resume" 
-            callback={() => {
-              // download
-              window.open('/resume.pdf', '_blank');
+    <>
+      <header className="sticky top-0 z-20 border-b border-border bg-bg/90 backdrop-blur">
+        <nav className="w-full flex items-center justify-between px-6 py-2">
+          <a 
+            href="#hero" 
+            className="group flex items-center gap-2" 
+            aria-label="Home"
+            onClick={(e) => {
+              e.preventDefault();
+              scrollToElement('hero', {
+                offset: -20,
+                duration: 1.2,
+              });
             }}
-          />
-        </div>
+          >
+            <Emblem
+              size={45}
+              className="transition-transform duration-300 group-hover:rotate-[8deg] group-hover:scale-110"
+            />
+            <span className="font-mono text-sm tracking-widest text-primary">Scipio</span>
+          </a>
 
-        {/* hamburger menu  */}
-        <button
-          type="button"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-          aria-controls="mobile-nav"
-          className="md:hidden relative w-8 h-8 shrink-0 text-ink z-30"
-        >
-          <span
-            className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
-              open ? 'rotate-45' : '-translate-y-2'
-            }`}
-          />
-          <span
-            className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
-              open ? 'opacity-0' : 'opacity-100'
-            }`}
-          />
-          <span
-            className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
-              open ? '-rotate-45' : 'translate-y-2'
-            }`}
-          />
-        </button>
-      </nav>
+          {/* desktop */}
+          <div className="hidden md:flex gap-6 items-center">
+            {NAV_LINKS.map(({ id, number, text }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={(e) => handleNavClick(id, e)}
+                className={`relative font-mono text-sm transition-colors duration-300 group ${
+                  activeSection === id ? 'text-primary' : 'text-muted hover:text-ink'
+                }`}
+              >
+                <span className="text-primary/60 mr-1">{number}</span>
+                {text}
+                {/* Active indicator line */}
+                <span 
+                  className={`absolute -bottom-1 left-0 h-0.5 bg-primary transition-all duration-300 ${
+                    activeSection === id ? 'w-full' : 'w-0 group-hover:w-full'
+                  }`}
+                />
+              </a>
+            ))}
+            <CallToActionButton 
+              text="Resume" 
+              callback={() => {
+                window.open('/resume.pdf', '_blank');
+              }}
+            />
+          </div>
 
-      {/*  Overlay */}
+          {/* hamburger menu button */}
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            className="md:hidden relative w-8 h-8 shrink-0 text-ink z-30"
+          >
+            <span
+              className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
+                open ? 'rotate-45' : '-translate-y-2'
+              }`}
+            />
+            <span
+              className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
+                open ? 'opacity-0' : 'opacity-100'
+              }`}
+            />
+            <span
+              className={`absolute left-1/2 top-1/2 block h-0.5 w-6 -translate-x-1/2 bg-current transition duration-300 ${
+                open ? '-rotate-45' : 'translate-y-2'
+              }`}
+            />
+          </button>
+        </nav>
+      </header>
+
+      {/* Overlay - moved outside header */}
       <div
-        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300 md:hidden z-[100] ${
           open ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setOpen(false)}
       />
 
-      {/* mobile drawer */}
       <div
         id="mobile-nav"
-        className={`fixed top-0 right-0 h-screen w-4/5 pt-0 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden ${
+        className={`fixed top-0 right-0 h-screen w-4/5 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden z-[101] ${
           open ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
@@ -211,8 +211,9 @@ export default function Navbar() {
               setOpen(false);
             }}
           />
+
         </div>
       </div>
-    </header>
-  );
+    </>
+  )
 }

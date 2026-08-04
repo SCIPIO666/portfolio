@@ -32,20 +32,25 @@ export default function ProjectModal() {
       setVisibleProject(project)
       setShowContent(false)
 
+      // Get initial dimensions based on screen size
+      const isMobile = window.innerWidth < 1024
+      const initialWidth = isMobile ? window.innerWidth * 0.9 : 500
+      const initialHeight = isMobile ? window.innerHeight * 0.8 : 500
+
       gsap.fromTo(
         modalRef.current,
         { 
           xPercent: 100, 
           opacity: 0,
-          width: 500,
-          height: 500,
+          width: initialWidth,
+          height: initialHeight,
           borderRadius: '50%'
         },
         {
           xPercent: 0,
           opacity: 1,
-          width: '100%', 
-          height: '100%', 
+          width: isMobile ? '100%' : '100%',
+          height: isMobile ? '100%' : '100%',
           borderRadius: '0px',
           duration: 0.6,
           ease: 'power3.out',
@@ -99,7 +104,7 @@ export default function ProjectModal() {
 
   return (
     <div 
-      className="fixed inset-y-45 sm:h-95vh md:inset-0 lg:inset-0 z-50 flex  items-start lg:items-center justify-center bg-black/70 overflow-y-auto" 
+      className="fixed inset-5 z-50 flex items-end lg:items-center justify-center bg-black/70 rounded-card" 
       onClick={handleClose}
     >
       <div
@@ -107,13 +112,11 @@ export default function ProjectModal() {
         onClick={(e) => e.stopPropagation()}
         className="
           relative
-          w-[90vw]
-          h-[75vh]
-          
+          w-full
+          h-full
           lg:w-[92vw]
           lg:max-w-6xl
           lg:h-[88dvh]
-
           
           bg-[var(--color-surface)]
           border-x lg:border
@@ -121,6 +124,7 @@ export default function ProjectModal() {
           
           lg:rounded-xl
           flex flex-col lg:flex-row
+          overflow-hidden
         "
       >
         <button
@@ -158,11 +162,11 @@ export default function ProjectModal() {
               w-full lg:w-[340px]
               flex-1 lg:flex-none
               lg:h-full 
-              overflow-scroll
+              overflow-y-auto
               p-5 pt-14 lg:p-6 lg:pt-6
               flex flex-col
             ">
-              <div className="flex-1 ">
+              <div className="flex-1">
                 <h2 className="text-2xl font-bold text-white mb-1">{visibleProject.title}</h2>
                 <p className="text-white/50 text-xs mb-4">{visibleProject.tech}</p>
                 <p className="text-white/70 text-sm mb-6">{visibleProject.achieved}</p>
