@@ -163,7 +163,7 @@ export default function ContactPage() {
               value={form.message}
               onChange={(e) => setForm({ ...form, message: e.target.value })}
               className="w-full bg-surface border border-border rounded-lg px-4 py-2.5 text-ink placeholder:text-muted-soft focus:outline-none focus:border-primary transition-colors resize-none"
-              placeholder="What are you building?"
+              placeholder="What is your building process??"
             />
           </div>
 
@@ -174,9 +174,6 @@ export default function ContactPage() {
             <Send size={16} /> Send message
           </button>
 
-          <p className="text-xs text-muted-soft text-center">
-            Opens your email client with this filled in — nothing is sent from here directly.
-          </p>
         </form>
       </div>
 

@@ -15,25 +15,24 @@ export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [activeSection, setActiveSection] = useState('')
 
-  // navigation click with smooth scroll
   const handleNavClick = (sectionId, e) => {
     e.preventDefault();
     setOpen(false);
     
-    // delay for menu close
+
     setTimeout(() => {
-      // offset for sticky navbar
+
       const navbar = document.querySelector('header');
       const navbarHeight = navbar ? navbar.offsetHeight : 80;
       
       scrollToElement(sectionId, {
-        offset: -navbarHeight - 20, // extra padding
+        offset: -navbarHeight - 20, 
         duration: 1.5,
       });
     }, 100);
   };
 
-  // active section on scroll
+
   useEffect(() => {
     const sections = NAV_LINKS.map(link => document.getElementById(link.id));
     
@@ -46,7 +45,7 @@ export default function Navbar() {
         });
       },
       {
-        rootMargin: '-50% 0px -50% 0px', // middle of viewport
+        rootMargin: '-50% 0px -50% 0px', 
         threshold: 0,
       }
     );
@@ -62,7 +61,7 @@ export default function Navbar() {
     };
   }, []);
 
-  // escape key close menu
+
   useEffect(() => {
     const handleEscape = (e) => {
       if (e.key === 'Escape') setOpen(false);
@@ -71,7 +70,7 @@ export default function Navbar() {
     return () => document.removeEventListener('keydown', handleEscape);
   }, []);
 
-  // close menu on outside click
+
   useEffect(() => {
     const handleClickOutside = (e) => {
       const nav = document.getElementById('mobile-nav');
@@ -84,7 +83,7 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, [open]);
 
-  // mobile menu open - prevent body scroll
+
   useEffect(() => {
     if (open) {
       document.body.style.overflow = 'hidden';

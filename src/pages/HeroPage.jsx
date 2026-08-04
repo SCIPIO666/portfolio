@@ -1,11 +1,12 @@
-import React, { useRef, useEffect } from "react";
+import React, { useRef, useEffect,useState } from "react";
 import gsap from "gsap";
 import ScrollTrigger from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
 import SplitType from "split-type";
 import CurveDivider from "../components/CurveDivider";
 import CallToActionButton from "../components/CallToActionButton";
-
+import {  FaWhatsapp } from 'react-icons/fa'
+import { SiGmail } from 'react-icons/si'
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Hero({ compact = false }) {
@@ -16,7 +17,12 @@ export default function Hero({ compact = false }) {
   const buttons = useRef();
   const status = useRef();
   const word = 'DEV SCIPIO· ';
-
+  const [open, setOpen] = useState(false)
+  const PHONE_NUMBER = '254115529179' 
+    const handleWhatsApp = () => {
+    const message = encodeURIComponent("Hi! I checked out your portfolio and i would like to connect.")
+    window.open(`https://wa.me/${PHONE_NUMBER}?text=${message}`, '_blank')
+  }
   //  font loading and refresh
   useEffect(() => {
     // Refresh ScrollTrigger after fonts load
@@ -254,12 +260,7 @@ export default function Hero({ compact = false }) {
                   Esphoney Ondicho Scipio
               </h1>
         }
-        {/* <h1
-          ref={nameRef}
-          className="text-hero mr-0 font-display font-bold leading-[1.08] text-ink mb-3"
-        >
-          Esphoney Ondicho Scipio.
-        </h1> */}
+
 
         <h2
           ref={title}
@@ -272,18 +273,23 @@ export default function Hero({ compact = false }) {
           ref={buttons}
           className="flex flex-wrap items-center justify-center gap-4"
         >
-          <CallToActionButton
-            text="Get My Resume"
-            className="btn-pill bg-primary text-primary-ink hover:bg-primary-soft shadow-btn-primary"
+          <CallToActionButton 
+            text="Get My Resume" 
+            callback={() => {
+              window.open('/resume.pdf', '_blank');
+              setOpen(false);
+            }}
           />
 
+
           <CallToActionButton
-            text="Email Me"
+            text={<SiGmail size={22}/>}
             className="btn-pill border border-border text-ink hover:bg-surface-raised"
           />
 
           <CallToActionButton
-            text="Message"
+            text={<FaWhatsapp size={22} />}
+            callback={handleWhatsApp}
             className="btn-pill border border-border text-ink hover:bg-surface-raised"
           />
         </div>
