@@ -180,7 +180,7 @@ export default function ContactPage() {
         </form>
       </div>
 
-      <CurveDivider variant="diagonal" flip height={300} />
+      <CurveDivider variant="valley"  height={300} />
     </section>
   )
 }
