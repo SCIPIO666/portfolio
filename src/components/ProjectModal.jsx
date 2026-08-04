@@ -104,7 +104,7 @@ export default function ProjectModal() {
 
   return (
     <div 
-      className="fixed inset-0 z-50 flex items-end lg:items-center justify-center bg-black/70" 
+      className="fixed inset-5 z-50 flex items-end lg:items-center justify-center bg-black/70 rounded-card" 
       onClick={handleClose}
     >
       <div
