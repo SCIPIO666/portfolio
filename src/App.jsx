@@ -3,7 +3,6 @@ import './App.css';
 import DevScipioAnimation from './components/DevScipioAnimation';
 import SinglePage from './pages/SinglePage';
 import Navbar from './components/Navbar';
-import LearnPlayground from './components/LearnPlayground'
 import ProjectModal from './components/ProjectModal'
 
 function App() {
@@ -19,14 +18,13 @@ function App() {
   }
 
   return (
-    <>
+    <div className='overflow-x-hidden w-full'>
     <Navbar/>
 
     
       <SinglePage/>
-
-            {/* <LearnPlayground/> */}
-    </>
+      <ProjectModal/>
+   </div>
   )
 
 }
