@@ -184,7 +184,6 @@ export default function Navbar() {
         onClick={() => setOpen(false)}
       />
 
-      {/* Mobile drawer - moved outside header with higher z-index */}
       <div
         id="mobile-nav"
         className={`fixed top-0 right-0 h-screen w-4/5 max-w-sm bg-bg border-l border-border shadow-xl transition-transform duration-300 ease-in-out md:hidden z-[101] ${
